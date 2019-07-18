@@ -1,2 +1,2 @@
 # ABlaze-Web
-Repository for ABlaze Web Team
+Repository for ABlaze Web
