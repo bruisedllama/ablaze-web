@@ -53,29 +53,29 @@ router.post('/login', (req, res) => {
         if (!user) {
             return req.status(400).json("Email does not found")
         }
+        bcrypt.compare(password, user.password).then(isMatch => {
+            if (isMatch) {
+                const payload = {
+                    id : user.id,
+                    name: user.name
+                };
+                jwt.sign(
+                    payload,
+                    keys.secretOrKey,
+                    {
+                        expiresIn: 31556926 // 1 year 
+                    },
+                    (err, token) => {
+                        res.json({
+                            success: true,
+                            token: "Bearer " + token
+                        });
+                    }
+                );
+            } else {
+                return res.status(400).json({ passwordincorrect: "Password incorrect" });
+            }
+        });
     })
-    bcrypt.compare(password, user.password).then(isMatch => {
-        if (isMatch) {
-            const payload = {
-                id : user.id,
-                name: user.name
-            };
-            jwt.sign(
-                payload,
-                keys.secretOrKey,
-                {
-                    expiresIn: 31556926 // 1 year 
-                },
-                (err, token) => {
-                    res.json({
-                        success: true,
-                        token: "Bearer " + token
-                    });
-                }
-            );
-        } else {
-            return res.status(400).json({ passwordincorrect: "Password incorrect" });
-        }
-    });
 });
 module.exports = router
