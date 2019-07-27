@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { TextInput, PasswordInput, Button } from 'carbon-components-react'
+import { TextInput, Button } from 'carbon-components-react'
 import axios from 'axios'
 
 export default class LogIn extends React.Component {
@@ -27,7 +27,7 @@ export default class LogIn extends React.Component {
     render() {
         return(
             <div id="login_div">
-                <h1>Log In</h1>
+                <h3>Log In</h3>
                 <label>Email</label>
                 <TextInput 
                     name = 'email'
@@ -36,6 +36,7 @@ export default class LogIn extends React.Component {
                     onChange = {this.onChange}
                     id = 'login_email'  
                     light="true" 
+                    placeholder="enter your email..."
                 />
                 <label>Password</label>
                 <TextInput
@@ -46,13 +47,17 @@ export default class LogIn extends React.Component {
                     onChange = {this.onChange}
                     id = 'login_password'  
                     light="true" 
+                    placeholder="enter your password..."
                 />
                 <Button 
                     onClick={this.logIn}
                     id="login_login"
+                    className="main-button"
                 >
                     Log In
                 </Button>
+                <br />
+                <Link className="main-link" to="/register">Don't have an account? Register Today</Link>
             </div>
         )
     }

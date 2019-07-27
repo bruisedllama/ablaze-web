@@ -1,9 +1,12 @@
 @import '~carbon-components/scss/globals/scss/styles.scss';
 
 $main: #413172;
-$second: #e48900;
-$light: #ffd83f;
+$interactive-01: #e48900;
+$interactive-02: #ffd83f;
+$interactive-03: #e48900;
+$interactive-04: #ffd83f;
 
+//general
 
 body {
   margin: 0;
@@ -11,16 +14,76 @@ body {
 }
 
 #main {
-  padding: 30px 5%;
+  padding: 0;
+  margin: 0;
 }
+
+.main-link {
+  font-size: 18px;
+}
+
+.main-link:hover {
+  text-decoration: none;
+}
+
+.main-button {
+  font-size: 20px;
+  padding: 5px 22px;
+}
+
+#main-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+#main-login {
+  font-size: 20px;
+  padding: 5px 15px;
+}
+
+//Login page (user)
 
 #login_div {
   padding: 40px 5%;
-  margin: 100px 20%;
+  margin: 20vh 20% 0vh 20%;
   box-shadow: 2px 2px 5px #ccc;
   border-radius: 10px;
+  font-size: 18px;
+  background-color: white;
 }
 
-.text_input:focus {
-  border: 2px solid $second;
+#login_div h3, #register_div h3 {
+  font-size: 40px;
+  padding-bottom: 10px;
+}
+
+#login_div #login_login, #register_div #register_register {
+  margin: 20px 0px;
+}
+
+#login_div label, #register_div label {
+  padding-top: 12px;
+}
+
+#login_div .main-link {
+  margin-top: 20px;
+}
+
+//register page (user)
+
+#register_main {
+  background: linear-gradient(35deg, #e48900, #413172, #ffd83f);
+  padding: 15vh 5% 10vh 40%;
+  height: 100vh;
+}
+
+#register_div {
+  padding: 40px 5%;
+  margin: 0;
+  box-shadow: 2px 2px 5px #ccc;
+  border-radius: 10px;
+  font-size: 18px; 
+  background-color: white;
 }
