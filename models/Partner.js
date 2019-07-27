@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 // Create Schema
-const UserSchema = new Schema({
+const PartnerSchema = new Schema({
   name: {
     type: String,
     required: true
@@ -15,12 +15,13 @@ const UserSchema = new Schema({
     required: true
   },
   phone: {
-    type: Number,
-    require: true
+      type: Number,
+      require: true
   },
   date: {
     type: Date,
     default: Date.now
-  }
+  },
+  stores: [{type: Schema.Types.ObjectId, ref: 'Store'}]
 });
-module.exports = User = mongoose.model("users", UserSchema);
+module.exports = Partner = mongoose.model("partner", PartnerSchema);
