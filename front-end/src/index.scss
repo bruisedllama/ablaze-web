@@ -1,6 +1,6 @@
 @import '~carbon-components/scss/globals/scss/styles.scss';
 
-$main: #413172;
+$main: #3800bb;
 $interactive-01: #e48900;
 $interactive-02: #ffd83f;
 $interactive-03: #e48900;
@@ -74,7 +74,7 @@ body {
 //register page (user)
 
 #register_main {
-  background: linear-gradient(35deg, #e48900, #413172, #ffd83f);
+  background: linear-gradient(35deg, #e48900 50%, #413172 50%);
   padding: 15vh 5% 10vh 40%;
   height: 100vh;
 }
@@ -86,4 +86,15 @@ body {
   border-radius: 10px;
   font-size: 18px; 
   background-color: white;
+}
+
+//homepage
+
+#main-home {
+  padding: 100px 5%;
+  background: white;
+}
+
+#main-home h1 {
+  font-size: 50px;
 }
