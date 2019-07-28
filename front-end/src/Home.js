@@ -13,6 +13,7 @@ export default class LogIn extends React.Component {
             <div id="homepage">
                 <section id="main-home">
                     <h1>Welcome to Ablaze</h1>
+                    <h3>--slogan--</h3>
                 </section>
             </div>
         )
