@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { TextInput, Button } from 'carbon-components-react'
 import axios from 'axios'
+import { Redirect } from 'react-router-dom'
 
 export default class Register extends React.Component {    
     constructor(props) {
@@ -9,9 +10,11 @@ export default class Register extends React.Component {
         this.state = {
             name: '',
             email: '',
-            password: ''
+            password: '',
+            password2: ''
         }
         this.onChange = this.onChange.bind(this)
+        
     }
 
     onChange(event) {
@@ -22,7 +25,18 @@ export default class Register extends React.Component {
     }
 
     register() {
-        //logic for registering user
+        const newUser = {
+            name: this.state.name,
+            email: this.state.email,
+            password: this.state.password,
+            password2: this.state.password2
+        };
+        axios.post('/api/userauth/register', newUser).then(function(response) {
+            console.log(response); // error message or user
+            if(response.success) {
+                return <Redirect to= '/login'></Redirect>
+            }
+        })
     }
 
     render() {
@@ -60,6 +74,17 @@ export default class Register extends React.Component {
                         id = 'register_password'  
                         light="true" 
                         placeholder="enter your password..."
+                    />
+                    <label>Re-enter Password</label>
+                    <TextInput
+                        type="password"
+                        className='text_input'
+                        name = 'password2'
+                        value = {this.state.password2}
+                        onChange = {this.onChange}
+                        id = 'register_password2'  
+                        light="true" 
+                        placeholder="enter your password again..."
                     />
                     <Button 
                         onClick={this.register}

@@ -21,7 +21,17 @@ export default class LogIn extends React.Component {
     }
 
     logIn() {
-        //logic for login
+        const user = {
+            email: this.state.email,
+            password: this.state.password
+        }
+        axios.post('/api/userauth/login', user).then(function(response) {
+            if (response.success) {
+                localStorage.setItem("token", response.token);
+            }else {
+                console.log(response)
+            }
+        })
     }
     
     render() {
