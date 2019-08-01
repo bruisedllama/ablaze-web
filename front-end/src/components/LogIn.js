@@ -11,6 +11,7 @@ export default class LogIn extends React.Component {
             password: ''
         }
         this.onChange = this.onChange.bind(this)
+        this.logIn = this.logIn.bind(this);
     }
 
     onChange(event) {
@@ -20,12 +21,13 @@ export default class LogIn extends React.Component {
         })
     }
 
-    logIn() {
+    logIn(e) {
+        e.preventDefault();
         const user = {
             email: this.state.email,
             password: this.state.password
         }
-        axios.post('/api/userauth/login', user).then(function(response) {
+        axios.post("http://localhost:5000"  +'/api/userauth/login', user).then(function(response) {
             if (response.success) {
                 localStorage.setItem("token", response.token);
             }else {

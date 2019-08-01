@@ -14,7 +14,7 @@ export default class Register extends React.Component {
             password2: ''
         }
         this.onChange = this.onChange.bind(this)
-        
+        this.register = this.register.bind(this)
     }
 
     onChange(event) {
@@ -24,15 +24,16 @@ export default class Register extends React.Component {
         })
     }
 
-    register() {
+    register(e) {
+        e.preventDefault();
         const newUser = {
             name: this.state.name,
             email: this.state.email,
             password: this.state.password,
             password2: this.state.password2
         };
-        axios.post('/api/userauth/register', newUser).then(function(response) {
-            console.log(response); // error message or user
+        axios.post("http://localhost:5000"   + '/api/userauth/register', newUser).then(function(response) {
+            console.log(response.errors); // error message or user
             if(response.success) {
                 return <Redirect to= '/login'></Redirect>
             }

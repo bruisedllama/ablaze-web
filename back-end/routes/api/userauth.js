@@ -11,6 +11,9 @@ const User = require("../../models/User");
 // @route POST api/users/register
 // @desc Register user
 // @access Public
+router.get('/test', (req,res) => {
+    res.send("test");
+})
 router.post('/register', (req, res) => {
     const { errors, isValid } = validateRegisterInput(req.body)
     if (!isValid) {
@@ -44,6 +47,8 @@ router.post('/register', (req, res) => {
 // @access Public
 router.post('/login', (req, res) => {
     const { errors, isValid } = validateLoginInput(req.body)
+    console.log(errors)
+    console.log(isValid)
     if (!isValid) {
         return res.status(400).json(errors)
     }
