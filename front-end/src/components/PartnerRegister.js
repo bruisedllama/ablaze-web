@@ -3,13 +3,15 @@ import { Link } from 'react-router-dom'
 import { TextInput, Button } from 'carbon-components-react'
 import axios from 'axios'
 
-export default class Register extends React.Component {    
+export default class LogIn extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            name: '',
+            storeName: '',
+            storeAddress: '',
             email: '',
-            password: ''
+            phone: '',
+            storeType: ''
         }
         this.onChange = this.onChange.bind(this)
     }
@@ -22,44 +24,52 @@ export default class Register extends React.Component {
     }
 
     register() {
-        //logic for registering user
+        //continue to next page of Business's register
     }
 
     render() {
         return(
-            <div id="register_main">
-                <div id="register_div">
-                    <h2>Register for Ablaze</h2>
-                    <label>Name</label>
+            <div id="partner-register-div">
+                    <h2>Register your Business for Ablaze</h2>
+                    <label>Store Name</label>
                     <TextInput 
-                        name = 'name'
+                        name = 'storeName'
                         className='text_input'
-                        value = {this.state.name}
+                        value = {this.state.storeName}
                         onChange = {this.onChange}
-                        id = 'register_name'  
+                        id = 'register_store_name'  
                         light="true" 
-                        placeholder="enter your full name..."
+                        placeholder="enter your store name..."
                     />
-                    <label>Email</label>
+                    <label>Store Address</label>
                     <TextInput 
                         name = 'email'
                         className='text_input'
+                        value = {this.state.storeAddress}
+                        onChange = {this.onChange}
+                        id = 'register_store_address'  
+                        light="true" 
+                        placeholder="enter your store address..."
+                    />
+                    <label>Email</label>
+                    <TextInput
+                        className='text_input'
+                        name = 'email'
                         value = {this.state.email}
                         onChange = {this.onChange}
-                        id = 'register_email'  
+                        id = 'register_store_email'  
                         light="true" 
-                        placeholder="enter your email..."
+                        placeholder="enter your store email..."
                     />
-                    <label>Password</label>
+                    <label>Phone</label>
                     <TextInput
-                        type="password"
                         className='text_input'
-                        name = 'password'
-                        value = {this.state.password}
+                        name = 'phone'
+                        value = {this.state.phone}
                         onChange = {this.onChange}
-                        id = 'register_password'  
+                        id = 'register_store_phone'  
                         light="true" 
-                        placeholder="enter your password..."
+                        placeholder="enter your store phone number..."
                     />
                     <button 
                         onClick={this.register}
@@ -68,7 +78,6 @@ export default class Register extends React.Component {
                     >
                         Get Started
                     </button>
-                </div>
             </div>
         )
     }

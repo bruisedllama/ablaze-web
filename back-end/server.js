@@ -13,7 +13,7 @@ app.use(
 );
 app.use(bodyParser.json());
 // DB Config
-const db = require("./config/keys").mongoURI;
+const db = require("./config/keys.js").mongoURI;
 // Connect to MongoDB
 mongoose
   .connect(
@@ -25,7 +25,7 @@ mongoose
 // Passport middleware
 app.use(passport.initialize());
 // Passport config
-require("./config/passport")(passport);
+require("./config/passport.js")(passport);
 // Routes
 app.use("/api/users", users);
 const port = process.env.PORT || 5000; // process.env.port is Heroku's port if you choose to deploy the app there

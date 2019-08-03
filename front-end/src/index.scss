@@ -1,10 +1,9 @@
 @import '~carbon-components/scss/globals/scss/styles.scss';
 
-$main: #3800bb;
-$interactive-01: #e48900;
-$interactive-02: #ffd83f;
-$interactive-03: #e48900;
-$interactive-04: #ffd83f;
+$primary: #e83910;
+$dark: #711603;
+$secondary: #ff9a3f;
+$background: #ffffff;
 
 //general
 
@@ -18,53 +17,110 @@ body {
   margin: 0;
 }
 
+h1 {
+  font-size: 60px;
+}
+
+h2 {
+  font-size: 50px;
+}
+
+h3 {
+  font-size: 40px;
+  color: #666;
+  padding: 5px 0px;
+}
+
+label {
+  padding-top: 8px;
+}
+
 .main-link {
   font-size: 18px;
+  color: $primary;
 }
 
 .main-link:hover {
   text-decoration: none;
+  color: $dark;
+}
+
+.text-input:focus {
+  border: 2px solid $secondary;
+}
+
+.main-button, .secondary-button {
+  outline: 0;
 }
 
 .main-button {
   font-size: 20px;
-  padding: 5px 22px;
+  padding: 7px 27px;
+  background-color: $primary;
+  color: $background;
+  border: 0;
+  outline: 0;
+  transition-duration: 0.2s;
+}
+
+.main-button:hover {
+  background-color: $dark;
+  text-decoration: none;
+}
+
+.secondary-button {
+  background-color: $background;
+  border: 3px solid $primary;
+  color: $primary;
+  font-size: 20px;
+  padding: 5px 25px;
+  transition-duration: 0.2s;
+}
+
+.secondary-button:hover {
+  border: 3px solid $secondary;
+  color: $secondary;
+  background-color: transparent;
+  text-decoration: none;
 }
 
 #main-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+  padding: 8px 0;
+}
+
+#main-nav .nav-link {
+  margin: 0px 10px;
+  font-size: 20px;
+}
+
+#main-nav .navbar-brand {
+  font-size: 24px;
+  margin-top: -2px;
 }
 
 #main-login {
   font-size: 20px;
   padding: 5px 15px;
 }
-
 //Login page (user)
 
 #login_div {
   padding: 40px 5%;
   margin: 20vh 20% 0vh 20%;
+}
+
+#login_div, #register_div {
   box-shadow: 2px 2px 5px #ccc;
-  border-radius: 10px;
   font-size: 18px;
   background-color: white;
 }
 
 #login_div h3, #register_div h3 {
-  font-size: 40px;
   padding-bottom: 10px;
 }
 
-#login_div #login_login, #register_div #register_register {
+#login_div #login_login, #register_register {
   margin: 20px 0px;
-}
-
-#login_div label, #register_div label {
-  padding-top: 12px;
 }
 
 #login_div .main-link {
@@ -74,7 +130,7 @@ body {
 //register page (user)
 
 #register_main {
-  background: linear-gradient(35deg, #e48900 50%, #413172 50%);
+  background: linear-gradient(35deg, $primary 50%, $secondary 50%);
   padding: 15vh 5% 10vh 40%;
   height: 100vh;
 }
@@ -82,20 +138,38 @@ body {
 #register_div {
   padding: 40px 5%;
   margin: 0;
-  box-shadow: 2px 2px 5px #ccc;
-  border-radius: 10px;
-  font-size: 18px; 
-  background-color: white;
 }
 
 //homepage
 
 #main-home {
-  padding: 100px 5%;
-  background: white;
+  padding: 15vh 5%;
+  background: $background;
+  text-align: center;
 }
 
-#main-home h1 {
-  font-size: 50px;
+#main-home h1, #partner-home h1 {
   padding: 50px 0px 20px 0px;
+}
+//partners homepage
+
+#partner-homepage {
+  padding: 15vh 5%;
+  background: $background;
+}
+
+#partner-home {
+  .col-sm-5 {
+    padding: 50px 0px;
+  }
+
+  .col-sm-7 {
+    padding: 0px 0px 0px 4%;
+  }
+}
+
+#partner-register-div {
+  background-color: $background;
+  padding: 50px 6%;
+  box-shadow: 2px 2px 5px #ccc;
 }

@@ -6,26 +6,34 @@ import Home from './Home'
 import LogIn from './components/LogIn'
 import Register from './components/Register'
 import UserApp from './components/UserApp'
-/*import RegisterUser from './components/RegisterUser'
-import RegisterRestaurant from './components/RegisterRestaurant'
-import AppUser from './components/AppUser'
-import AppRestaurant from './components/AppRestaurant'*/
+import Navbar from './components/Navbar'
+import PartnerHome from './components/PartnerHome'
 
 class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      loggedIn: false,
+      name: "Tester"
+    }
+  }
+
+  componentDidMount() {
+    //get user data & login status from API
+  }
+  
   render() {
     return (
       <Router>
         <div id="body">
-          <nav className="navbar navbar-expand-lg navbar-light bg-light" id="main-nav">
-            <Link to="/" className="navbar-brand">Ablaze</Link>
-            <Link to="/login"> <Button id="main-login">Login</Button></Link>
-          </nav>
+          <Navbar loggedIn={this.state.loggedIn} name={this.state.name}/>
           <div id="main">
             {/* APP ROUTES */ }
             <Route path="/" exact component={Home} />
             <Route path="/login" component={LogIn} />
             <Route path="/register" component={Register}/> 
             <Route path="/app" component={UserApp}/> {/*will have a "user app" & "restaurant app"; must be separate interfaces*/}
+            <Route path="/partner" component={PartnerHome}/> 
           </div>
         </div>
       </Router>
