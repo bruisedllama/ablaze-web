@@ -1,10 +1,9 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { TextInput, Button } from 'carbon-components-react'
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import { Redirect } from 'react-router-dom'
 
 export default class Register extends React.Component {    
     constructor(props) {
@@ -37,12 +36,16 @@ export default class Register extends React.Component {
         axios.post("http://localhost:5000"   + '/api/userauth/register', newUser).then(function(response) {
             console.log(response.errors); // error message or user
             if(response.success) {
-                return <Redirect to= '/login'></Redirect>
+                return <Redirect to= '/app'></Redirect>
             }
         })
     }
 
     render() {
+        if (this.props.loggedIn === true) {
+            return <Redirect to='/app' />
+        }
+
         return(
             <div id="register_main">
                 <div id="register_div">

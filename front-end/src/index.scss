@@ -113,19 +113,19 @@ label {
     margin: 0px 15px;
     font-size: 20px;
   }
-  .navbar-brand {
-    font-size: 24px;
-    margin-top: -2px;
+  #nav-logo img {
+    height: 32px;
+    margin-top: -6px;
   }
   .nav-item {
     outline: 0;
   }
-  #main-login, #main-signup {
+  #main-login, #main-signup, #main-logout {
     font-size: 18px;
     padding: 5px 20px;
     margin-top: 2px;
   }
-  #main-signup {
+  #main-signup, #main-logout {
     padding: 2px 12px;
     border: 3px solid $primary;
     margin: 0px 30px 0px 15px;
@@ -133,12 +133,18 @@ label {
   #main-signup:hover {
     border: 3px solid $secondary;
   }
+  #main-logout:hover {
+    border: 3px solid $secondary;
+  }
+  #main-logout {
+    margin: 0px 0px 0px 30px;
+  }
 }
 //Login page (user)
 
 #login_div {
   padding: 40px 5%;
-  margin: 20vh 20% 0vh 20%;
+  margin: 20vh 25% 0vh 25%;
 }
 
 #login_div, #register_div {

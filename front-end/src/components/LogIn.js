@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { TextInput, Button } from 'carbon-components-react'
 import axios from 'axios'
 
@@ -30,6 +30,7 @@ export default class LogIn extends React.Component {
         axios.post("http://localhost:5000"  +'/api/userauth/login', user).then(function(response) {
             if (response.success) {
                 localStorage.setItem("token", response.token);
+                return <Redirect to= '/app'></Redirect>
             }else {
                 console.log(response)
             }
@@ -37,6 +38,10 @@ export default class LogIn extends React.Component {
     }
     
     render() {
+        if (this.props.loggedIn === true) {
+            return <Redirect to='/app' />
+        }
+
         return(
             <div id="login_div">
                 <h2>Log In</h2>
