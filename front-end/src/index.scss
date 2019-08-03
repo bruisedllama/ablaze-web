@@ -28,7 +28,6 @@ h2 {
 h3 {
   font-size: 40px;
   color: #666;
-  padding: 5px 0px;
 }
 
 label {
@@ -43,10 +42,6 @@ label {
 .main-link:hover {
   text-decoration: none;
   color: $dark;
-}
-
-.text-input:focus {
-  border: 2px solid $secondary;
 }
 
 .main-button, .secondary-button {
