@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { TextInput, Button } from 'carbon-components-react'
 import axios from 'axios'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { Redirect } from 'react-router-dom'
 
 export default class Register extends React.Component {    
@@ -92,7 +94,7 @@ export default class Register extends React.Component {
                         id="register_register"
                         className="main-button"
                     >
-                        Get Started
+                        Get Started <FontAwesomeIcon className="fa-icon" icon={faChevronRight}/>
                     </button>
                 </div>
             </div>

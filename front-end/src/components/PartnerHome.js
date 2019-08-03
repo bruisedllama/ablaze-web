@@ -4,7 +4,7 @@ import { TextInput, Button } from 'carbon-components-react'
 import axios from 'axios'
 import PartnerRegister from './PartnerRegister'
 
-export default class LogIn extends React.Component {
+export default class PartnerHome extends React.Component {
     constructor(props) {
         super(props)
     }

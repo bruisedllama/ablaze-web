@@ -10,9 +10,8 @@ export default class Navbar extends React.Component {
     
     render() {
         return (
-            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="main-nav">
-                <div class="container">
-                <Link class="navbar-brand" to="/">Ablaze</Link>
+            <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="main-nav">
+                <Link className="navbar-brand" to="/">Ablaze</Link>
                 <div className="collapse navbar-collapse" id="navbarResponsive">
                     <ul className="navbar-nav ml-auto">
                     <li className="nav-item">
@@ -24,11 +23,13 @@ export default class Navbar extends React.Component {
                     <li className="nav-item">
                         <Link to="/Contact" className="nav-link">Contact</Link>
                     </li>
-                    <li className="nav-item">
-                    <Link to={!this.props.loggedIn ? "/login" : "/app"}> <button id="main-login" className="main-button">{this.props.loggedIn ? "Welcome " + this.props.name : "Login"}</button></Link>
+                    <li className="nav-item" style={{marginTop: "3px"}}>
+                    <Link to="/Register"> <button id="main-signup" className="secondary-button">Sign Up</button></Link>
+                    </li>
+                    <li className="nav-item" style={{marginTop: "3px"}}>
+                    <Link to={!this.props.loggedIn ? "/login" : "/app"}> <button id="main-login" className="main-button">{this.props.loggedIn ? "Welcome, " + this.props.name : "Login"}</button></Link>
                     </li>
                     </ul>
-                </div>
                 </div>
             </nav>
         )

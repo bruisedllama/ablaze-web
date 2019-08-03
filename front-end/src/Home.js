@@ -1,9 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { TextInput, Button } from 'carbon-components-react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
 
-export default class LogIn extends React.Component {
+export default class Home extends React.Component {
     constructor(props) {
         super(props)
     }
@@ -15,9 +17,23 @@ export default class LogIn extends React.Component {
                     <h1>Welcome to Ablaze</h1>
                     <h3>Rewarding you for supporting local businesses.</h3>
                     <br />
-                    <Link to="/register"><button className="secondary-button">Sign Up Today</button></Link>
+                    <Link to="/register"><button className="secondary-button">Sign Up Today <FontAwesomeIcon className="fa-icon" icon={faChevronRight}/></button></Link>
                     <br /><br />
-                    <Link to="/partner" className="main-link">Are you a local business? Become an Ablaze partner here.</Link>
+                    <Link to="/partner" className="main-link">Are you a local business? Become an Ablaze partner </Link>
+                </section>
+                <section id="home-about">
+                    <h2>How does it work?</h2>
+                    <div className="row">
+                        <div className="col-sm-4">
+                            <h4>Search for Local Businesses</h4>
+                        </div>
+                        <div className="col-sm-4">
+                            <h4>Claim Your Deals</h4>
+                        </div>
+                        <div className="col-sm-4">
+                            <h4>Redeem Your Deals at Businesses</h4>
+                        </div>
+                    </div>
                 </section>
             </div>
         )

@@ -1,101 +1,137 @@
 @import '~carbon-components/scss/globals/scss/styles.scss';
+@import url('https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900&display=swap');
 
 $primary: #e83910;
 $dark: #711603;
 $secondary: #ff9a3f;
 $background: #ffffff;
+$blue: #0062ff;
 
 //general
 
 body {
   margin: 0;
   padding: 0;
+  font-family: 'Rubik';
+  font-weight: 300;
+
+  h1 {
+    font-size: 70px;
+    font-weight: 900;
+  }
+  
+  h2 {
+    font-size: 40px;
+    font-weight: 700;
+  }
+  
+  h3 {
+    font-size: 35px;
+    color: #666;
+    font-weight: 500;
+  }
+
+  .main-button, .secondary-button {
+    outline: 0;
+    font-weight: 700;
+    font-size: 22px;
+    padding: 7px 32px;
+    transition-duration: 0.2s;
+  }
+  
 }
 
-#main {
-  padding: 0;
-  margin: 0;
-}
-
-h1 {
-  font-size: 60px;
-}
-
-h2 {
-  font-size: 50px;
-}
-
-h3 {
-  font-size: 40px;
-  color: #666;
+.fa-icon {
+  transition-duration: 0.1s;
 }
 
 label {
-  padding-top: 8px;
+  padding-top: 12px;
+  font-size: 14px;
+  color: #666;
+  font-weight: 400;
 }
 
 .main-link {
-  font-size: 18px;
+  font-size: 20px;
   color: $primary;
+
+  .fa-icon {
+    margin: 0px 3px;
+  }
 }
 
 .main-link:hover {
   text-decoration: none;
   color: $dark;
-}
 
-.main-button, .secondary-button {
-  outline: 0;
+  .fa-icon {
+    margin: 0px 0px 0px 6px;
+  }
 }
 
 .main-button {
-  font-size: 20px;
-  padding: 7px 27px;
   background-color: $primary;
   color: $background;
   border: 0;
   outline: 0;
-  transition-duration: 0.2s;
+  .fa-icon {
+    margin: 0px 3px;
+  }
 }
 
 .main-button:hover {
   background-color: $dark;
   text-decoration: none;
+
+  .fa-icon {
+    margin: 0px 0px 0px 6px;
+  }
 }
 
 .secondary-button {
-  background-color: $background;
-  border: 3px solid $primary;
+  background-color: transparent;
+  border: 4px solid $primary;
   color: $primary;
-  font-size: 20px;
-  padding: 5px 25px;
-  transition-duration: 0.2s;
+
+  .fa-icon {
+    margin: 0px 3px;
+  }
 }
 
 .secondary-button:hover {
-  border: 3px solid $secondary;
+  border: 4px solid $secondary;
   color: $secondary;
-  background-color: transparent;
   text-decoration: none;
+
+  .fa-icon {
+    margin: 0px 0px 0px 6px;
+  }
 }
 
 #main-nav {
-  padding: 8px 0;
-}
+  padding: 8px 2%;
 
-#main-nav .nav-link {
-  margin: 0px 10px;
-  font-size: 20px;
-}
-
-#main-nav .navbar-brand {
-  font-size: 24px;
-  margin-top: -2px;
-}
-
-#main-login {
-  font-size: 20px;
-  padding: 5px 15px;
+  .nav-link {
+    margin: 0px 15px;
+    font-size: 20px;
+  }
+  .navbar-brand {
+    font-size: 24px;
+    margin-top: -2px;
+  }
+  #main-login, #main-signup {
+    font-size: 20px;
+    padding: 5px 20px;
+  }
+  #main-signup {
+    padding: 2px 12px;
+    border: 3px solid $primary;
+    margin: 0px 30px 0px 15px;
+  }
+  #main-signup:hover {
+    border: 3px solid $secondary;
+  }
 }
 //Login page (user)
 
@@ -105,28 +141,24 @@ label {
 }
 
 #login_div, #register_div {
-  box-shadow: 2px 2px 5px #ccc;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   font-size: 18px;
-  background-color: white;
-}
-
-#login_div h3, #register_div h3 {
-  padding-bottom: 10px;
+  background-color:$background;
+  border-radius: 5px;
+  h3 {
+    padding-bottom: 10px;
+  }
 }
 
 #login_div #login_login, #register_register {
-  margin: 20px 0px;
-}
-
-#login_div .main-link {
-  margin-top: 20px;
+  margin: 27px 0px 0px 0px;
 }
 
 //register page (user)
 
 #register_main {
   background: linear-gradient(35deg, $primary 50%, $secondary 50%);
-  padding: 15vh 5% 10vh 40%;
+  padding: 16vh 5% 10vh 40%;
   height: 100vh;
 }
 
@@ -138,14 +170,32 @@ label {
 //homepage
 
 #main-home {
-  padding: 15vh 5%;
+  padding: 20vh 5%;
   background: $background;
   text-align: center;
+  height: 100vh;
 }
 
 #main-home h1, #partner-home h1 {
   padding: 50px 0px 20px 0px;
 }
+
+#home-about {
+  color: white;
+  background-color: $primary;
+  padding: 60px 5%;
+
+  h2 {
+    padding-bottom: 25px;
+  }
+
+  .col-sm-4 {
+    h3 {
+      padding: 15px 0px;
+    }
+  }
+}
+
 //partners homepage
 
 #partner-homepage {
@@ -165,6 +215,10 @@ label {
 
 #partner-register-div {
   background-color: $background;
-  padding: 50px 6%;
-  box-shadow: 2px 2px 5px #ccc;
+  padding: 37px 8%;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+
+  h2 {
+    font-size: 32px;
+  }
 }

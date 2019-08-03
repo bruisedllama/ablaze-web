@@ -39,7 +39,7 @@ export default class LogIn extends React.Component {
     render() {
         return(
             <div id="login_div">
-                <h3>Log In</h3>
+                <h2>Log In</h2>
                 <label>Email</label>
                 <TextInput 
                     name = 'email'
@@ -65,6 +65,7 @@ export default class LogIn extends React.Component {
                     onClick={this.logIn}
                     id="login_login"
                     className="main-button"
+                    style={{marginBottom: "20px"}}
                 >
                     Log In
                 </Button>

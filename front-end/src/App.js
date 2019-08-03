@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from 'carbon-components-react'
+import $ from 'jquery';
 import Home from './Home'
 import LogIn from './components/LogIn'
 import Register from './components/Register'
