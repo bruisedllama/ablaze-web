@@ -15,8 +15,8 @@ const PartnerSchema = new Schema({
     required: true
   },
   phone: {
-      type: Number,
-      require: true
+    type: Number,
+    required: true
   },
   date: {
     type: Date,
