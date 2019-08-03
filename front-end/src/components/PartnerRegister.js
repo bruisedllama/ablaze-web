@@ -24,7 +24,7 @@ export default class LogIn extends React.Component {
     }
 
     register() {
-        //continue to next page of Business's register
+        //continue to next page of Partner's registration process
     }
 
     render() {
