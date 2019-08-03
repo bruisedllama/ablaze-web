@@ -14,8 +14,8 @@ export default class PartnerHome extends React.Component {
             <div id="partner-homepage">
                 <div id="partner-home" className="row">
                     <div className="col-sm-5">
-                        <h1>Ablaze for Local Businesses</h1>
-                        <h3>Rewarding you for supporting the community.</h3>
+                        <h1>Rewarding you for supporting the community.</h1>
+                        <h3>Ablaze for Local Businesses.</h3>
                     </div>
                     <div className="col-sm-7">
                         <PartnerRegister />
