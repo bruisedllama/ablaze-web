@@ -4,7 +4,7 @@ import { TextInput, Button } from 'carbon-components-react'
 import axios from 'axios'
 import Logo from './../images/logo-long.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faTimes, faHome, faMoneyBillWave, faUser, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
 class Navbar extends React.Component {
     constructor(props) {
@@ -35,10 +35,10 @@ class Navbar extends React.Component {
                 <div>
                     <div id="app-menu-button" onClick={this.toggleSidebar} style={{padding: this.state.sidebar ? "7px 13px" : "7px 11px"}}><FontAwesomeIcon className="fa-icon" icon={this.state.sidebar ? faTimes : faBars} style={{color: this.state.sidebar ? "fefefe" : "#333"}}/></div>
                     <div id="app-sidebar" style={{left: leftMargin}}>
-                        <Link to='/app' className="sidenav-item" onClick={this.toggleSidebar}>Home</Link>
-                        <Link to='/app/deals' className="sidenav-item" onClick={this.toggleSidebar}>My Deals</Link>
-                        <Link to='/app/account' className="sidenav-item" onClick={this.toggleSidebar}>My Account</Link>
-                        <a className="sidenav-item">Logout</a>
+                        <Link to='/app' className="sidenav-item" onClick={this.toggleSidebar}><FontAwesomeIcon className="fa-icon" icon={faHome} /> Home </Link>
+                        <Link to='/app/deals' className="sidenav-item" onClick={this.toggleSidebar}><FontAwesomeIcon className="fa-icon" icon={faMoneyBillWave} /> My Deals</Link>
+                        <Link to='/app/account' className="sidenav-item" onClick={this.toggleSidebar}><FontAwesomeIcon className="fa-icon" icon={faUser} /> My Account</Link>
+                        <a className="sidenav-item"><FontAwesomeIcon className="fa-icon" icon={faSignOutAlt} /> Logout</a>
                     </div>
                     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="app-nav">
                         <Link className="navbar-brand" to="/" id="nav-logo"><img src={Logo}/></Link>

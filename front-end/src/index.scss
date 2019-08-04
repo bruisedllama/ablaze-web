@@ -198,12 +198,19 @@ label {
     font-weight: 700;
     text-transform: uppercase;
     transition-duration: 0.2s;
+    .fa-icon {
+      margin: 0px 5px;
+      transition-duration: 0.1s;
+    }
   }
 
   .sidenav-item:hover {
     background-color: #555;
     text-decoration: none;
     cursor: pointer;
+    .fa-icon {
+      margin: 0px 2px 0px 8px;
+    }
   }
 }
 

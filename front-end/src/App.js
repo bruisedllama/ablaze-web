@@ -30,7 +30,10 @@ class App extends Component {
           <Navbar loggedIn={this.state.loggedIn} name={this.state.name}/>
           <div id="main">
             {/* NAV ROUTES */ }
-            <Route path="/" exact component={Home} />
+            <Route
+              path='/' exact
+              render={(props) => <Home {...props} loggedIn={this.state.loggedIn} />}
+            />
             <Route
               path='/login'
               render={(props) => <LogIn {...props} loggedIn={this.state.loggedIn} />}

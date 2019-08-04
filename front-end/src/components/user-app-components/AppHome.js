@@ -5,7 +5,8 @@ export default class AppHome extends React.Component {
         return(
             <div id="main-app-div">
                 <section id="app-div1">
-                    <h1>Search for Restaurants</h1>
+                    <h1>What are you looking for?</h1>
+                    <i>Try "Restaurants", "Music Stores", "Gas Stations", etc</i>
                     <div className="row" id="quicklinks">
                         <div className="col-sm-1"></div>
                         <div className="col-sm-2">
