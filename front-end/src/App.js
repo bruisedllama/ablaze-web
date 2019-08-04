@@ -14,7 +14,7 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      loggedIn: false,
+      loggedIn: true,
       name: "Tester"
     }
   }
@@ -29,7 +29,7 @@ class App extends Component {
         <div id="body">
           <Navbar loggedIn={this.state.loggedIn} name={this.state.name}/>
           <div id="main">
-            {/* APP ROUTES */ }
+            {/* NAV ROUTES */ }
             <Route path="/" exact component={Home} />
             <Route
               path='/login'
@@ -43,7 +43,7 @@ class App extends Component {
               path='/app'
               render={(props) => <UserApp {...props} loggedIn={this.state.loggedIn} />}
             />
-            <Route path="/partner" component={PartnerHome}/> 
+            <Route path="/partner" exact component={PartnerHome}/> 
           </div>
         </div>
       </Router>

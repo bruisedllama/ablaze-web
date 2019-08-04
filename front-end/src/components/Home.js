@@ -15,7 +15,7 @@ export default class Home extends React.Component {
             <div id="homepage">
                 <section id="main-home">
                     <h1>Rewarding you for supporting local businesses.</h1>
-                    <h3>Ablaze connects communities.</h3>
+                    <h3>Connecting communities. Ablaze.</h3>
                     <br />
                     <Link to="/register"><button className="secondary-button">Sign Up Today <FontAwesomeIcon className="fa-icon" icon={faChevronRight}/></button></Link>
                     <br /><br />
