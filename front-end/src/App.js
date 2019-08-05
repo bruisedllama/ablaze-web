@@ -6,6 +6,7 @@ import $ from 'jquery';
 import Home from './components/Home'
 import LogIn from './components/LogIn'
 import Register from './components/Register'
+import UserTerms from './components/UserTerms'
 import UserApp from './components/UserApp'
 import Navbar from './components/Navbar'
 import PartnerHome from './components/PartnerHome'
@@ -14,7 +15,7 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      loggedIn: true,
+      loggedIn: false,
       name: "Tester"
     }
   }
@@ -39,6 +40,10 @@ class App extends Component {
               render={(props) => <LogIn {...props} loggedIn={this.state.loggedIn} />}
             />
             <Route
+              path='/terms'
+              render={(props) => <UserTerms {...props} loggedIn={this.state.loggedIn} />}
+            />
+            <Route
               path='/register'
               render={(props) => <Register {...props} loggedIn={this.state.loggedIn} />}
             />
@@ -46,7 +51,7 @@ class App extends Component {
               path='/app'
               render={(props) => <UserApp {...props} loggedIn={this.state.loggedIn} />}
             />
-            <Route path="/partner" exact component={PartnerHome}/> 
+            <Route path="/partner" exact component={PartnerHome}/>
           </div>
         </div>
       </Router>

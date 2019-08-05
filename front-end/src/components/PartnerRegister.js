@@ -16,15 +16,19 @@ export default class PartnerRegister extends React.Component {
             phone: '',
             storeType: ''
         }
-        this.onChange = this.onChange.bind(this)
     }
 
-    onChange(event) {
+    onChange = (event) => {
         const {name, value} = event.target
         this.setState({
             [name]: value
         })
-       console.log(this.state)
+    }
+
+    onSelect = (opt, name) => {
+        this.setState({ [name]: opt.value }, () => {
+            console.log(this.state)
+        });
     }
 
     register() {
@@ -37,7 +41,9 @@ export default class PartnerRegister extends React.Component {
             { value: 'general_store', label: 'General Store' },
             { value: 'specialty_store', label: 'Specialty Store' },
             { value: 'education', label: 'Education' },
-            { value: 'entertainment', label: 'Entertainment' }
+            { value: 'entertainment', label: 'Entertainment' },
+            { value: 'service', label: 'Service' },
+            { value: 'other', label: 'Other...' },
         ]
 
         const customStyles = {
@@ -113,7 +119,7 @@ export default class PartnerRegister extends React.Component {
                     <label>Type of Business</label>
                     <Select
                         name = 'storeType'
-                        onClick = {this.onChange}
+                        onChange={(opt) => this.onSelect(opt, 'storeType')}
                         id = 'register_store_type'  
                         options={options}
                         theme={theme => ({

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, Redirect } from 'react-router-dom'
-import { TextInput, Button } from 'carbon-components-react'
+import { TextInput, Button, Checkbox } from 'carbon-components-react'
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
@@ -12,7 +12,8 @@ export default class Register extends React.Component {
             name: '',
             email: '',
             password: '',
-            password2: ''
+            password2: '',
+            termsChecked: false
         }
         this.onChange = this.onChange.bind(this)
         this.register = this.register.bind(this)
@@ -20,9 +21,7 @@ export default class Register extends React.Component {
 
     onChange(event) {
         const {name, value} = event.target
-        this.setState({
-            [name]: value
-        })
+        name !== 'termsChecked' ? this.setState({[name]: value}) : this.setState({[name]: !this.state.termsChecked})
     }
 
     register(e) {
@@ -36,7 +35,19 @@ export default class Register extends React.Component {
         axios.post("http://localhost:5000"   + '/api/userauth/register', newUser).then(function(response) {
             console.log(response.errors); // error message or user
             if(response.success) {
-                return <Redirect to= '/app'></Redirect>
+                //login the user
+                const user = {
+                    email: newUser.email,
+                    password: newUser.password
+                }
+                axios.post("http://localhost:5000"  +'/api/userauth/login', user).then(function(response) {
+                    if (response.success) {
+                        localStorage.setItem("token", response.token);
+                        return <Redirect to= '/terms'></Redirect>//user must agree to terms and then proceed to app
+                    }else {
+                        console.log(response)
+                    }
+                })
             }
         })
     }

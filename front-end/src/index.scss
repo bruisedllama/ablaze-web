@@ -222,7 +222,7 @@ label {
 }
 
 #login_div, #register_div {
-  box-shadow: 5px 5px 30px #aaa;
+  box-shadow: 2px 2px 12px #aaa;
   font-size: 18px;
   background-color:$background;
   border-radius: 5px;
@@ -277,6 +277,11 @@ label {
   }
 }
 
+//terms
+#terms-body {
+  padding: 50px 5%;
+}
+
 //partners homepage
 
 #partner-homepage {
@@ -312,10 +317,34 @@ label {
 #main-app-div {
   #app-div-1 {
     padding: 100px 5%;
-    text-align: center;
+    text-align: center;    
+    h2 {
+      padding-bottom: 30px;
+    }
+    #search-sec {
+      margin: 0;
+      padding: 0;
+      #searchInput {
+        width: 62%;
+        float: left;
+        margin: 0px;
+      }
+      .filter {
+        width: 18.5%;
+        margin: 0px 0 0px 0.5%;
+        float: left;
+      }
+    }
 
     #quicklinks {
-      margin: 15px 15%;
+      margin: 0px auto;
+      padding-top: 30px;
+      width: 690px;
+      display: block;
+    }
+
+    #quicklinks .col-md-2, #quicklinks p {
+      display: inline;
     }
   }
 }

@@ -42,15 +42,17 @@ class Navbar extends React.Component {
                     </div>
                     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="app-nav">
                         <Link className="navbar-brand" to="/" id="nav-logo"><img src={Logo}/></Link>
-                        <div className="collapse navbar-collapse" id="navbarResponsive">
-                            <ul className="navbar-nav ml-auto">
-                            <li className="nav-item" style={{marginTop: "2px"}}>
-                                <button id="main-logout" className="secondary-button" onClick={this.logout}>Logout</button>
-                            </li>
-                            </ul>
-                        </div>
+                        <ul className="navbar-nav ml-auto">
+                        <li className="nav-item" style={{marginTop: "2px"}}>
+                            <button id="main-logout" className="secondary-button" onClick={this.logout}>Logout</button>
+                        </li>
+                        </ul>
                     </nav>  
                 </div>
+            )
+        } else if(path==='/terms') {
+            return(
+                <div></div>
             )
         }
 
@@ -64,16 +66,16 @@ class Navbar extends React.Component {
                 <div className="collapse navbar-collapse" id="navbarResponsive">
                     <ul className="navbar-nav ml-auto">
                     <li className="nav-item">
-                        <Link to="/About" className="nav-link">About Us</Link>
+                        <Link to="/about" className="nav-link">About Us</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/Services" className="nav-link">Services</Link>
+                        <Link to="/services" className="nav-link">Services</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/Contact" className="nav-link">Contact</Link>
+                        <Link to="/contact" className="nav-link">Contact</Link>
                     </li>
                     <li className="nav-item" style={{marginTop: "3px", display: this.props.loggedIn && "none"}}>
-                    <Link to="/Register"> <button id="main-signup" className="secondary-button">Sign Up</button></Link>
+                    <Link to="/register"> <button id="main-signup" className="secondary-button">Sign Up</button></Link>
                     </li>
                     <li className="nav-item" style={{marginTop: "2px"}}>
                     <Link to={!this.props.loggedIn ? "/login" : "/app"}> <button id="main-login" className="main-button">{this.props.loggedIn ? "Welcome, " + this.props.name : "Login"}</button></Link>

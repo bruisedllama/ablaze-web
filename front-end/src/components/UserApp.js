@@ -10,16 +10,6 @@ class UserApp extends React.Component {
         super(props)
         this.state = {}
     }
-
-    componentWillMount() {
-        this.unlisten = this.props.history.listen((location, action) => {
-            this.forceUpdate()
-        });
-    }
-
-    componentDidMount() {
-        this.unlisten();
-    }
     
     render() {
         if (this.props.loggedIn === false) {
@@ -31,6 +21,7 @@ class UserApp extends React.Component {
         let renderComponent = <AppHome />
         if(path === '/app/account') renderComponent = <AppAccount />
         if(path === '/app/deals') renderComponent = <AppDeals />
+        //more paths can be added here
         console.log(path)
         return(
                 <div id="app-body">
