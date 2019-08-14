@@ -12,7 +12,7 @@ class UserApp extends React.Component {
     }
     
     render() {
-        if (this.props.loggedIn === false) {
+        if (this.props.auth.isAuthenticated === false) {
             return <Redirect to='/login' />
         }
 

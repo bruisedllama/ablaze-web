@@ -1,19 +1,33 @@
 import React from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import { TextInput, Button } from 'carbon-components-react'
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { loginUser } from "../../actions/authActions";
+import classnames from "classnames";
 import axios from 'axios'
 
-export default class LogIn extends React.Component {
+class LogIn extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            errors: {}
         }
         this.onChange = this.onChange.bind(this)
         this.logIn = this.logIn.bind(this);
     }
-
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.auth.isAuthenticated) {
+          this.props.history.push("/app"); // push user to dashboard when they login
+        }
+        if (nextProps.errors) {
+            this.setState({
+                errors: nextProps.errors
+            });
+        }
+    }   
     onChange(event) {
         const {name, value} = event.target
         this.setState({
@@ -23,32 +37,31 @@ export default class LogIn extends React.Component {
 
     logIn(e) {
         e.preventDefault();
-        const user = {
+        const userData = {
             email: this.state.email,
             password: this.state.password
         }
-        axios.post("http://localhost:5000"  +'/api/userauth/login', user).then(function(response) {
-            if (response.success) {
-                localStorage.setItem("token", response.token);
-                return <Redirect to= '/app'></Redirect>
-            }else {
-                console.log(response)
-            }
-        })
+        this.props.loginUser(userData);
     }
     
     render() {
+        const errors = this.state.errors
         if (this.props.loggedIn === true) {
             return <Redirect to='/app' />
         }
-
         return(
             <div id="login_div">
                 <h2>Log In</h2>
                 <label>Email</label>
+                <span className="red-text">
+                  {errors.email}
+                  {errors.emailnotfound}
+                </span>
                 <TextInput 
                     name = 'email'
-                    className='text_input'
+                    className={classnames("text_input", {
+                        invalid: errors.email || errors.emailnotfound
+                    })}
                     value = {this.state.email}
                     onChange = {this.onChange}
                     id = 'login_email'  
@@ -56,9 +69,15 @@ export default class LogIn extends React.Component {
                     placeholder="enter your email..."
                 />
                 <label>Password</label>
+                <span className="red-text">
+                  {errors.password}
+                  {errors.passwordincorrect}
+                </span>
                 <TextInput
                     type="password"
-                    className='text_input'
+                    className={classnames("text_input", {
+                        invalid: errors.password || errors.passwordincorrect
+                    })}
                     name = 'password'
                     value = {this.state.password}
                     onChange = {this.onChange}
@@ -80,3 +99,16 @@ export default class LogIn extends React.Component {
         )
     }
 }
+LogIn.propTypes = {
+    loginUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+    auth: state.auth,
+    errors: state.errors
+});
+export default connect(
+    mapStateToProps,
+    { loginUser }
+)(LogIn);

@@ -1,11 +1,15 @@
 import React from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { Link, Redirect, withRouter } from 'react-router-dom'
 import { TextInput, Button, Checkbox } from 'carbon-components-react'
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { registerUser } from "../../actions/authActions";
+import classnames from "classnames";
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 
-export default class Register extends React.Component {    
+class Register extends React.Component {    
     constructor(props) {
         super(props)
         this.state = {
@@ -13,10 +17,18 @@ export default class Register extends React.Component {
             email: '',
             password: '',
             password2: '',
+            errors: {},
             termsChecked: false
         }
         this.onChange = this.onChange.bind(this)
         this.register = this.register.bind(this)
+    }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errors) {
+          this.setState({
+            errors: nextProps.errors
+          });
+        }
     }
 
     onChange(event) {
@@ -32,27 +44,11 @@ export default class Register extends React.Component {
             password: this.state.password,
             password2: this.state.password2
         };
-        axios.post("http://localhost:5000"   + '/api/userauth/register', newUser).then(function(response) {
-            console.log(response.errors); // error message or user
-            if(response.success) {
-                //login the user
-                const user = {
-                    email: newUser.email,
-                    password: newUser.password
-                }
-                axios.post("http://localhost:5000"  +'/api/userauth/login', user).then(function(response) {
-                    if (response.success) {
-                        localStorage.setItem("token", response.token);
-                        return <Redirect to= '/terms'></Redirect>//user must agree to terms and then proceed to app
-                    }else {
-                        console.log(response)
-                    }
-                })
-            }
-        })
+        this.props.registerUser(newUser, this.props.history);
     }
 
     render() {
+        const errors = this.state.errors
         if (this.props.loggedIn === true) {
             return <Redirect to='/app' />
         }
@@ -62,9 +58,12 @@ export default class Register extends React.Component {
                 <div id="register_div">
                     <h2>Register for Ablaze</h2>
                     <label>Name</label>
+                    <span className="red-text">{errors.name}</span>
                     <TextInput 
                         name = 'name'
-                        className='text_input'
+                        className= {classnames("text_input", {
+                            invalid: errors.name
+                        })}
                         value = {this.state.name}
                         onChange = {this.onChange}
                         id = 'register_name'  
@@ -72,9 +71,12 @@ export default class Register extends React.Component {
                         placeholder="enter your full name..."
                     />
                     <label>Email</label>
+                    <span className="red-text">{errors.email}</span>
                     <TextInput 
                         name = 'email'
-                        className='text_input'
+                        className={classnames("text_input", {
+                            invalid: errors.email
+                        })}
                         value = {this.state.email}
                         onChange = {this.onChange}
                         id = 'register_email'  
@@ -82,9 +84,12 @@ export default class Register extends React.Component {
                         placeholder="enter your email..."
                     />
                     <label>Password</label>
+                    <span className="red-text">{errors.password}</span>
                     <TextInput
                         type="password"
-                        className='text_input'
+                        className={classnames("text_input", {
+                            invalid: errors.password
+                        })}
                         name = 'password'
                         value = {this.state.password}
                         onChange = {this.onChange}
@@ -93,9 +98,12 @@ export default class Register extends React.Component {
                         placeholder="enter your password..."
                     />
                     <label>Re-enter Password</label>
+                    <span className="red-text">{errors.password2}</span>
                     <TextInput
                         type="password"
-                        className='text_input'
+                        className={classnames("text_input", {
+                            invalid: errors.password2
+                        })}
                         name = 'password2'
                         value = {this.state.password2}
                         onChange = {this.onChange}
@@ -115,3 +123,17 @@ export default class Register extends React.Component {
         )
     }
 }
+Register.propTypes = {
+    registerUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+    auth: state.auth,
+    errors: state.errors
+});
+
+export default connect(
+    mapStateToProps,
+    {registerUser}
+)(withRouter(Register))
