@@ -3,7 +3,7 @@ import { Link, Redirect, withRouter } from 'react-router-dom'
 import { TextInput, Button, Checkbox } from 'carbon-components-react'
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { registerUser } from "../../actions/authActions";
+import { registerUser } from "../actions/authActions";
 import classnames from "classnames";
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

@@ -15,7 +15,7 @@ import UserTerms from './components/UserTerms'
 import UserApp from './components/UserApp'
 import Navbar from './components/Navbar'
 import PartnerHome from './components/PartnerHome'
-
+import AppAccount from './components/user-app-components/AppAccount'
 if (localStorage.jwtToken) {
   const token = localStorage.jwtToken;
   setAuthToken(token)
@@ -41,28 +41,32 @@ class App extends Component {
       <Provider store = {store}>
         <Router>
           <div id="body">
-            <Navbar loggedIn={this.state.loggedIn} name={this.state.name}/>
+            <Navbar/>
             <div id="main">
               {/* NAV ROUTES */ }
               <Route
                 path='/' exact
-                render={(props) => <Home {...props} loggedIn={this.state.loggedIn} />}
+                component = {Home}
               />
               <Route
                 path='/login'
-                render={(props) => <LogIn {...props} loggedIn={this.state.loggedIn} />}
+                component = {LogIn}
               />
               <Route
                 path='/terms'
-                render={(props) => <UserTerms {...props} loggedIn={this.state.loggedIn} />}
+                component = {UserTerms}
               />
               <Route
                 path='/register'
-                render={(props) => <Register {...props} loggedIn={this.state.loggedIn} />}
+                component = {Register}
               />
               <Route
                 path='/app'
-                render={(props) => <UserApp {...props} loggedIn={this.state.loggedIn} />}
+                component = {UserApp}
+              />
+              <Route
+                path = '/account'
+                component = {AppAccount}
               />
               <Route path="/partner" exact component={PartnerHome}/>
             </div>
