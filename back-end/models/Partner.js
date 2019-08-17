@@ -22,9 +22,6 @@ const PartnerSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  stores: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Store'
-  }]
+  stores: [{type: Schema.Types.ObjectId, ref: 'Store'}]
 });
 module.exports = Partner = mongoose.model("partner", PartnerSchema);

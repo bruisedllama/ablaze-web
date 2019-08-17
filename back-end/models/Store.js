@@ -7,19 +7,9 @@ const StoreSchema = new Schema({
     required: true
   },
   owner: {
-    type: Schema.Types.ObjectId,
-    ref: 'Partner'
+    type: Schema.Types.ObjectId, ref: 'Partner'
   },
-  coupons: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Coupon'
-  }],
-  orders: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Order'
-  }],
-  logo: {
-    type: Buffer
-  }
+  coupons: [{type: Schema.Types.ObjectId, ref: 'Coupon'}]
+
 });
 module.exports = Store = mongoose.model("store", StoreSchema);

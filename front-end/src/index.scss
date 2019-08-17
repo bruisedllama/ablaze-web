@@ -316,7 +316,7 @@ label {
 
 #main-app-div {
   #app-div-1 {
-    padding: 10vh 5%;
+    padding: 100px 5%;
     text-align: center;    
     h2 {
       padding-bottom: 30px;
@@ -346,20 +346,5 @@ label {
     #quicklinks .col-md-2, #quicklinks p {
       display: inline;
     }
-  }
-}
-
-#app-account-div {
-  padding: 5vh 5%;
-  h2 {
-    padding: 10px 0px 10px 0px;
-  }
-
-  .account-card {
-    padding: 30px 4%;
-    box-shadow: 2px 2px 5px #aaa;
-    background-color: $background;
-    border-left: 5px solid $primary;
-    margin: 20px 0px;
   }
 }

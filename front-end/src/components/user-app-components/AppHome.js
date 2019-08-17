@@ -69,8 +69,8 @@ export default class AppHome extends React.Component {
             valueContainer: (provided) => ({
                 ...provided,
                 fontSize: "15px",
-                marginLeft: '9px',
-                padding: '8px 0px',
+                marginLeft: "7px",
+                padding: '8px 0px'
             }),
             singleValue: (provided) => ({
                 ...provided,
