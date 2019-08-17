@@ -5,7 +5,7 @@ const passport = require("passport")
 const userauth = require("./routes/api/userauth")
 const users = require("./routes/api/users")
 const app = express();
-
+var cors = require("cors")
 
 app.use(
   bodyParser.urlencoded({
@@ -13,7 +13,7 @@ app.use(
   })
 );
 app.use(bodyParser.json());
-
+app.use(cors())
 // DB Config
 const db = require("./config/keys.js").mongoURI;
 // Connect to MongoDB
@@ -35,9 +35,6 @@ mongoose
 app.use(passport.initialize());
 // Passport config
 require("./config/passport.js")(passport);
-// Routes
-app.use("/api/users", users);
-
 require("./config/passport")(passport);
 //Routes
 app.use("/api/userauth", userauth);

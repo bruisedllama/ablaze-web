@@ -15,6 +15,7 @@ router.get('/test', (req,res) => {
     res.send("test");
 })
 router.post('/register', (req, res) => {
+    console.log("got register request")
     const { errors, isValid } = validateRegisterInput(req.body)
     if (!isValid) {
         return res.status(400).json(errors)
@@ -46,6 +47,7 @@ router.post('/register', (req, res) => {
 // @desc Login User
 // @access Public
 router.post('/login', (req, res) => {
+    console.log("got login request")
     const { errors, isValid } = validateLoginInput(req.body)
     console.log(errors)
     console.log(isValid)
@@ -58,29 +60,29 @@ router.post('/login', (req, res) => {
         if (!user) {
             return req.status(400).json("Email does not found")
         }
+        bcrypt.compare(password, user.password).then(isMatch => {
+            if (isMatch) {
+                const payload = {
+                    id : user.id,
+                    name: user.name
+                };
+                jwt.sign(
+                    payload,
+                    keys.secret,
+                    {
+                        expiresIn: 31556926 // 1 year 
+                    },
+                    (err, token) => {
+                        res.json({
+                            success: true,
+                            token: "Bearer " + token
+                        });
+                    }
+                );
+            } else {
+                return res.status(400).json({ passwordincorrect: "Password incorrect" });
+            }
+        });
     })
-    bcrypt.compare(password, user.password).then(isMatch => {
-        if (isMatch) {
-            const payload = {
-                id : user.id,
-                name: user.name
-            };
-            jwt.sign(
-                payload,
-                keys.secret,
-                {
-                    expiresIn: 31556926 // 1 year 
-                },
-                (err, token) => {
-                    res.json({
-                        success: true,
-                        token: "Bearer " + token
-                    });
-                }
-            );
-        } else {
-            return res.status(400).json({ passwordincorrect: "Password incorrect" });
-        }
-    });
 });
 module.exports = router

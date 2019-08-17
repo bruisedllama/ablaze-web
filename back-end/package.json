@@ -11,6 +11,7 @@
     "carbon-components-react": "^7.4.1",
     "carbon-icons": "^7.0.7",
     "concurrently": "^4.1.1",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "is-empty": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
