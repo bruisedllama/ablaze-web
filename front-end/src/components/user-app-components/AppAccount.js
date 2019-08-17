@@ -1,21 +1,23 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 import { TextInput, Button } from 'carbon-components-react'
-
-export default class AppAccount extends React.Component {
+import PropTypes from "prop-types"
+import {connect} from "react-redux"
+import {logoutUser} from "../../actions/authActions"
+class AppAccount extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-
+            user: null
         }
     }
 
     componentDidMount() {
-        //pull data from API
-        //alternatively user data can be sent in as props from UserApp
     }
     
     render() {
+        const user = this.props.auth.user;
+        console.log(user)
         return(
             <div id="app-account-div">
                <h2>My Account</h2>
@@ -23,6 +25,7 @@ export default class AppAccount extends React.Component {
                 <div className="col-md-6">
                     <div id="account-profile" className="account-card">
                         <h3>Profile</h3>
+                        <h4>{user.id}</h4>
                         <hr />
                     </div>
                 </div>
@@ -41,3 +44,16 @@ export default class AppAccount extends React.Component {
         )
     }
 }
+
+AppAccount.propTypes = {
+    logoutUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
+}
+const mapStateToProps = state => ({
+    auth: state.auth
+})
+
+export default connect (
+    mapStateToProps,
+    { logoutUser }
+) (AppAccount)
