@@ -15,8 +15,9 @@ class Navbar extends React.Component {
         this.toggleSidebar = this.toggleSidebar.bind(this)
     }
 
-    logout() {
-        //logout logic
+    logout = () => {
+        this.props.changeLoginStatus(false)
+        localStorage.removeItem("token")
     }
 
     toggleSidebar() {

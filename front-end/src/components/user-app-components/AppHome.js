@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from "react-router-dom";
 import { TextInput, Button, Search } from 'carbon-components-react'
 import Select from "react-select";
+import AppFeed from './AppFeed'
 
 export default class AppHome extends React.Component {
     constructor(props) {
@@ -11,7 +12,13 @@ export default class AppHome extends React.Component {
             focused: false,
             filterType: '',
             filterDistance: 100000,
+            feedShown: false,
+            featuredDeals: [],
         }
+    }
+
+    componentDidMount() {
+        //get featured deals from API
     }
 
     onChange = (opt, name) => {
@@ -25,6 +32,10 @@ export default class AppHome extends React.Component {
         }, () => {
             this.search()
         })
+    }
+
+    toggleFeed = () => {
+        this.setState({feedShown: !this.state.feedShown})
     }
 
 
@@ -79,7 +90,7 @@ export default class AppHome extends React.Component {
           }
         
         return(
-            <div id="main-app-div">
+            <div id="main-app-div" style={{width: this.state.feedShown ? '82%' : '100%'}}>
                 <section id="app-div-1">
                     <h2>What are you looking for?</h2>
                     <div id="search-sec">  
@@ -150,7 +161,15 @@ export default class AppHome extends React.Component {
                         </div>
                         <div className="col-md-1"></div>
                     </div>
+                    <div id="featured-deals">
+                        <h3>Featured Deals</h3>
+                        {this.state.featuredDeals.map(() => {
+                            return (<div id="deal">Deal</div>)
+                        })}
+                    </div>
                 </section>
+                <button id="feed-toggle" style={{right: this.state.feedShown ? '13%' : '-5%'}} onClick={this.toggleFeed}>{this.state.feedShown ? '-' : '+'}</button>
+                <AppFeed shown={this.state.feedShown}/>
             </div>
         )
     }

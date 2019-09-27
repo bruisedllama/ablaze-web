@@ -15,11 +15,10 @@ export default class Register extends React.Component {
             password2: '',
             termsChecked: false
         }
-        this.onChange = this.onChange.bind(this)
         this.register = this.register.bind(this)
     }
 
-    onChange(event) {
+    onChange = (event) => {
         const {name, value} = event.target
         name !== 'termsChecked' ? this.setState({[name]: value}) : this.setState({[name]: !this.state.termsChecked})
     }
@@ -32,18 +31,22 @@ export default class Register extends React.Component {
             password: this.state.password,
             password2: this.state.password2
         };
-        axios.post("http://localhost:5000"   + '/api/userauth/register', newUser).then(function(response) {
-            console.log(response.errors); // error message or user
-            if(response.success) {
+        axios.post("http://localhost:5000"   + '/api/userauth/register', newUser).then((response) => {
+            response.errors && console.log(response.errors)// error message or user
+            if(response.data.success) {
                 //login the user
                 const user = {
                     email: newUser.email,
                     password: newUser.password
                 }
-                axios.post("http://localhost:5000"  +'/api/userauth/login', user).then(function(response) {
-                    if (response.success) {
-                        localStorage.setItem("token", response.token);
-                        return <Redirect to= '/terms'></Redirect>//user must agree to terms and then proceed to app
+                console.log(user)
+                axios.post("http://localhost:5000"  +'/api/userauth/login', user).then((response) => {
+                    response.errors && console.log(response.errors)
+                    if (response.data.success) {
+                        console.log("logged in!")
+                        localStorage.setItem("token", response.data.token);
+                        this.props.changeLoginStatus(true)
+                        //return <Redirect to= '/'></Redirect>//user must agree to terms and then proceed to app
                     }else {
                         console.log(response)
                     }

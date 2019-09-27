@@ -15,47 +15,60 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      loggedIn: true,
-      name: "Tester"
+      loggedIn: false,
+      name: "Tester",
+      loaded: false
     }
   }
 
+  changeLoginStatus = (data) => {
+    this.setState(() => {
+      return {loggedIn: data}
+    })
+  }
+
   componentDidMount() {
-    //get user data & login status from API
+    //get login status from API
+    localStorage.getItem('token') != null && this.setState({loggedIn: true})
+    this.setState({loaded: true})
   } 
   
   render() {
-    return (
-      <Router>
-        <div id="body">
-          <Navbar loggedIn={this.state.loggedIn} name={this.state.name}/>
-          <div id="main">
-            {/* NAV ROUTES */ }
-            <Route
-              path='/' exact
-              render={(props) => <Home {...props} loggedIn={this.state.loggedIn} />}
-            />
-            <Route
-              path='/login'
-              render={(props) => <LogIn {...props} loggedIn={this.state.loggedIn} />}
-            />
-            <Route
-              path='/terms'
-              render={(props) => <UserTerms {...props} loggedIn={this.state.loggedIn} />}
-            />
-            <Route
-              path='/register'
-              render={(props) => <Register {...props} loggedIn={this.state.loggedIn} />}
-            />
-            <Route
-              path='/app'
-              render={(props) => <UserApp {...props} loggedIn={this.state.loggedIn} />}
-            />
-            <Route path="/partner" exact component={PartnerHome}/>
+    if(!this.state.loaded) {
+      return (<div>LOADING</div>)
+    } else {
+      return (
+        <Router>
+          <div id="body">
+            <Navbar loggedIn={this.state.loggedIn} name={this.state.name} changeLoginStatus={this.changeLoginStatus}/>
+            <div id="main">
+              {/* NAV ROUTES */ }
+              <Route
+                path='/' exact
+                render={(props) => <Home {...props} loggedIn={this.state.loggedIn} />}
+              />
+              <Route
+                path='/login'
+                render={(props) => <LogIn {...props} loggedIn={this.state.loggedIn} changeLoginStatus={this.changeLoginStatus}/>}
+              />
+              <Route
+                path='/terms'
+                render={(props) => <UserTerms {...props} loggedIn={this.state.loggedIn} />}
+              />
+              <Route
+                path='/register'
+                render={(props) => <Register {...props} loggedIn={this.state.loggedIn} changeLoginStatus={this.changeLoginStatus}/>}
+              />
+              <Route
+                path='/app'
+                render={(props) => <UserApp {...props} loggedIn={this.state.loggedIn} />}
+              />
+              <Route path="/partner" exact component={PartnerHome}/>
+            </div>
           </div>
-        </div>
-      </Router>
-    );
+        </Router>
+      );
+    }
   }
 }
 

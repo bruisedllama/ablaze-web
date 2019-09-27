@@ -1,18 +1,27 @@
 import React from 'react'
 import { Link } from "react-router-dom";
+import ProfilePic from './ProfilePic'
 import { TextInput, Button } from 'carbon-components-react'
 
 export default class AppAccount extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-
+            name: '',
+            imageUrl: '',
+            dateJoined: '',
+            payment: ''
         }
     }
 
     componentDidMount() {
         //pull data from API
         //alternatively user data can be sent in as props from UserApp
+        this.setState(() => {
+             return {
+                 name: 'Bob Smith'
+             }
+        })
     }
     
     render() {
@@ -24,6 +33,7 @@ export default class AppAccount extends React.Component {
                     <div id="account-profile" className="account-card">
                         <h3>Profile</h3>
                         <hr />
+                        <ProfilePic imageUrl={this.state.imageUrl}/>
                     </div>
                 </div>
                 <div className="col-md-6" id="account-info">

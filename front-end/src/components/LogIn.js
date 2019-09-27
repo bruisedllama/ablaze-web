@@ -10,11 +10,10 @@ export default class LogIn extends React.Component {
             email: '',
             password: ''
         }
-        this.onChange = this.onChange.bind(this)
-        this.logIn = this.logIn.bind(this);
+        this.logIn = this.logIn.bind(this)
     }
 
-    onChange(event) {
+    onChange = (event) => {
         const {name, value} = event.target
         this.setState({
             [name]: value
@@ -27,10 +26,12 @@ export default class LogIn extends React.Component {
             email: this.state.email,
             password: this.state.password
         }
-        axios.post("http://localhost:5000"  +'/api/userauth/login', user).then(function(response) {
-            if (response.success) {
-                localStorage.setItem("token", response.token);
-                return <Redirect to= '/app'></Redirect>
+        axios.post("http://localhost:5000"  +'/api/userauth/login', user).then((response) => {
+            response.errors && console.log(response.errors)
+            if (response.data.success) {
+                console.log("logged in!")
+                localStorage.setItem("token", response.data.token)
+                this.props.changeLoginStatus(true)
             }else {
                 console.log(response)
             }
