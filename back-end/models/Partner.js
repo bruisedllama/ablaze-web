@@ -2,15 +2,15 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 // Create Schema
 const PartnerSchema = new Schema({
-  name: {
+  storeName: {
     type: String,
     required: true
   },
-  email: {
+  storeAddress: {
     type: String,
     required: true
   },
-  password: {
+  storeEmail: {
     type: String,
     required: true
   },
@@ -18,10 +18,26 @@ const PartnerSchema = new Schema({
     type: Number,
     required: true
   },
+  storeType: {
+    type: String,
+    required: true
+  },
+  managerName: {
+    type: String,
+    required: true
+  },
+  managerEmail: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
   date: {
     type: Date,
     default: Date.now
   },
-  stores: [{type: Schema.Types.ObjectId, ref: 'Store'}]
+  coupons: [{type: Schema.Types.ObjectId, ref: 'Coupon'}]
 });
 module.exports = Partner = mongoose.model("partner", PartnerSchema);

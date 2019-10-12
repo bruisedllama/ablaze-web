@@ -6,11 +6,15 @@ const PartnerSchema = new Schema({
     type: String,
     required: true
   },
-  email: {
+  address: {
     type: String,
     required: true
   },
   password: {
+    type: String,
+    required: true
+  },
+  type: {
     type: String,
     required: true
   },
@@ -22,6 +26,10 @@ const PartnerSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  stores: [{type: Schema.Types.ObjectId, ref: 'Store'}]
+  approved: {
+    type: Boolean,
+    default: false
+  },
+  coupons: [{type: Schema.Types.ObjectId, ref: 'Coupon'}]
 });
 module.exports = Partner = mongoose.model("partner", PartnerSchema);

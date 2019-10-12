@@ -7,33 +7,39 @@ const keys = require("../../config/keys");
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 // Load User model
-const User = require("../../models/User");
-// @route POST api/users/register
-// @desc Register users
+const Partner = require("../../models/Partner");
+
+// @route POST api/partners/register
+// @desc Register partner
 // @access Public
 router.get('/test', (req,res) => {
     res.send("test");
 })
 router.post('/register', (req, res) => {
-    const { errors, isValid } = validateRegisterInput(req.body)
+    /*const { errors, isValid } = validateRegisterInput(req.body)
     if (!isValid) {
         return res.status(400).json(errors)
-    }
-    User.findOne({ email: req.body.email }).then(user => {
-        if (user) {
-            res.status(400).json(({ email: "Email already exists! " }))
+    }*/
+    Partner.findOne({ email: req.body.managerEmail }).then(partner => {
+        if (partner) {
+            res.status(400).json({ email: "Email already exists! " })
         } else {
-            const newUser = new User({
-                name: req.body.name,
-                email: req.body.email,
+            const newPartner = new Partner({
+                storeName: req.body.storeName,
+                storeAddress: req.body.storeAddress,
+                storeEmail: req.body.storeEmail,
+                phone: req.body.phone,
+                storeType: req.body.storeType,
+                managerName: req.body.managerName,
+                managerEmail: req.body.managerEmail,
                 password: req.body.password
             });
             // Hash password before saving in database
             bcrypt.genSalt(10, (err, salt) => {
-                bcrypt.hash(newUser.password, salt, (err, hash) => {
+                bcrypt.hash(newPartner.password, salt, (err, hash) => {
                     if (err) throw err;
-                    newUser.password = hash;
-                    newUser
+                    newPartner.password = hash;
+                    newPartner
                         .save()
                         .then(user => res.send({success: true}))
                         .catch(err => console.log(err));
@@ -42,25 +48,25 @@ router.post('/register', (req, res) => {
         }
     })
 })
-// @route POST api/users/login
-// @desc Login User
+// @route POST api/partners/login
+// @desc Login Partner to Partner Dashboard
 // @access Public
 router.post('/login', (req, res) => {
     const { errors, isValid } = validateLoginInput(req.body)
     if (!isValid) {
         return res.status(400).json(errors)
     }
-    const email = req.body.email
+    const email = req.body.managerEmail
     const password = req.body.password
-    User.findOne({ email }).then(user => {
-        if (!user) {
+    Partner.findOne({ email }).then(partner => {
+        if (!partner) {
             res.status(400).json({emailnotfound: "Email was not found"})
         } else {
-            bcrypt.compare(password, user.password).then(isMatch => {
+            bcrypt.compare(password, partner.password).then(isMatch => {
                 if (isMatch) {
                     const payload = {
-                        id : user.id,
-                        name: user.name
+                        id : partner.id,
+                        name: partner.name
                     };
                     jwt.sign(
                         payload,
@@ -71,7 +77,7 @@ router.post('/login', (req, res) => {
                         (err, token) => {
                             res.json({
                                 success: true,
-                                token: "Bearer " + token
+                                token: "Partner " + token
                             });
                         }
                     );
@@ -83,22 +89,19 @@ router.post('/login', (req, res) => {
     })
 });
 
-// @route GET api/users/get
-// @desc get all users and their data
+// @route GET api/partners/get
+// @desc get ALL partner data
 // @access Public?
 router.post('/get', (req, res) => {
-    User.find({})
-        .then(users => res.json(users))
+    Partner.find()
+        .then(partners => res.json(partners))
         .catch(err => console.log(err))
 })
 
-// @route GET api/users/get/:email
-// @desc get user data by email
-// @access Public?
 router.post('/get/:email', (req, res) => {
     const email = req.body.email
-    User.findOne({email})
-        .then(user => res.json(user))
+    Partner.findOne({email})
+        .then(partner => res.json(partner))
         .catch(err => console.log(err))
 })
 

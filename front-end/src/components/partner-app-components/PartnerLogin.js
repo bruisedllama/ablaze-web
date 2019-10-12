@@ -3,7 +3,7 @@ import { Link, Redirect } from 'react-router-dom'
 import { TextInput, Button } from 'carbon-components-react'
 import axios from 'axios'
 
-export default class LogIn extends React.Component {
+export default class PartnerLogIn extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -22,16 +22,16 @@ export default class LogIn extends React.Component {
 
     logIn = (e) => {
         e.preventDefault();
-        const user = {
+        const partner = {
             email: this.state.email,
             password: this.state.password
         }
-        axios.post('http://localhost:5000' + '/api/users/login', user)
+        axios.post('http://localhost:5000' + '/api/partners/login', partner)
             .then(response => {
                 console.log(response)
                 console.log("logged in!")
-                localStorage.setItem("token", response.data.token)
-                this.props.changeLoginStatus(true, user.email)
+                localStorage.setItem("partner-token", response.data.token)
+                this.props.changeLoginStatus(true, partner.email)
             })
             .catch((error) => {
                 if (error.response) {
@@ -53,15 +53,15 @@ export default class LogIn extends React.Component {
     }
     
     render() {
-        if (this.props.loggedIn) {
-            return <Redirect to='/app' />
+        if (this.props.loggedIn === true) {
+            return <Redirect to='/partner/dashboard' />
         }
 
         return(
-            <div id="login_bg">
-            <div id="login_div">
-                <h2>Log In</h2>
-                <label>Email</label>
+            <div id="partner_login_bg">
+            <div id="partner_login_div">
+                <h2 style={{color: "white"}}>Log In - Partner</h2>
+                <label>Manager Email</label>
                 <TextInput 
                     name = 'email'
                     className='text_input'
@@ -85,7 +85,7 @@ export default class LogIn extends React.Component {
                 <Button 
                     onClick={this.logIn}
                     id="login_login"
-                    className="main-button"
+                    className="secondary-button"
                     style={{marginBottom: "20px"}}
                 >
                     Log In
@@ -93,7 +93,7 @@ export default class LogIn extends React.Component {
                 <div className="alert alert-danger" id="error-message" role="alert" style={{display: this.state.errors ? 'block' : 'none'}}>
                         errors: {this.state.errors}
                 </div>
-                <Link style={{display: 'block'}} className="main-link" to="/register">Don't have an account? Register Today</Link>
+                <Link style={{display: 'block'}} className="main-link" to="/partner">Don't have an account? Register Today</Link>
             </div>
             </div>
         )

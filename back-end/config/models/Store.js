@@ -1,4 +1,6 @@
-const mongoose = require("mongoose");
+//we don't need a store schema, just partner (business) + their deals
+
+/*const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 // Create Schema
 const StoreSchema = new Schema({
@@ -12,4 +14,4 @@ const StoreSchema = new Schema({
   coupons: [{type: Schema.Types.ObjectId, ref: 'Coupon'}]
 
 });
-module.exports = Store = mongoose.model("store", StoreSchema);
+module.exports = Store = mongoose.model("store", StoreSchema);*/

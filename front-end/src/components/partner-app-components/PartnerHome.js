@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { TextInput, Button } from 'carbon-components-react'
 import axios from 'axios'
 import PartnerRegister from './PartnerRegister'
@@ -7,6 +7,9 @@ import PartnerRegister from './PartnerRegister'
 export default class PartnerHome extends React.Component {
     constructor(props) {
         super(props)
+    }
+
+    componentDidMount = () => {
     }
 
     render() {
@@ -17,8 +20,8 @@ export default class PartnerHome extends React.Component {
                         <h1>Rewarding you for supporting the community.</h1>
                         <h3>Ablaze for Local Businesses.</h3>
                     </div>
-                    <div className="col-sm-7">
-                        <PartnerRegister />
+                    <div className="col-sm-7" style={{position: 'relative'}}>
+                        <PartnerRegister changeLoginStatus={this.props.changeLoginStatus}/>
                     </div>
                 </div>
             </div>

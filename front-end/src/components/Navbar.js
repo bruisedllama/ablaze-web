@@ -16,8 +16,9 @@ class Navbar extends React.Component {
     }
 
     logout = () => {
-        this.props.changeLoginStatus(false)
+        this.props.changeLoginStatus(false, '')
         localStorage.removeItem("token")
+        localStorage.removeItem("currentUserData")
     }
 
     toggleSidebar() {
@@ -39,7 +40,7 @@ class Navbar extends React.Component {
                         <Link to='/app' className="sidenav-item" onClick={this.toggleSidebar}><FontAwesomeIcon className="fa-icon" icon={faHome} /> Home </Link>
                         <Link to='/app/deals' className="sidenav-item" onClick={this.toggleSidebar}><FontAwesomeIcon className="fa-icon" icon={faMoneyBillWave} /> My Deals</Link>
                         <Link to='/app/account' className="sidenav-item" onClick={this.toggleSidebar}><FontAwesomeIcon className="fa-icon" icon={faUser} /> My Account</Link>
-                        <a className="sidenav-item"><FontAwesomeIcon className="fa-icon" icon={faSignOutAlt} /> Logout</a>
+                        <a className="sidenav-item" onClick={this.logout}><FontAwesomeIcon className="fa-icon" icon={faSignOutAlt} /> Logout</a>
                     </div>
                     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="app-nav">
                         <Link className="navbar-brand" to="/" id="nav-logo"><img src={Logo}/></Link>
@@ -52,6 +53,10 @@ class Navbar extends React.Component {
                 </div>
             )
         } else if(path==='/terms') {
+            return(
+                <div></div>
+            )
+        } else if(path.includes('partner')) {
             return(
                 <div></div>
             )
@@ -79,7 +84,7 @@ class Navbar extends React.Component {
                     <Link to="/register"> <button id="main-signup" className="secondary-button">Sign Up</button></Link>
                     </li>
                     <li className="nav-item" style={{marginTop: "2px"}}>
-                    <Link to={!this.props.loggedIn ? "/login" : "/app"}> <button id="main-login" className="main-button">{this.props.loggedIn ? "Welcome, " + this.props.name : "Login"}</button></Link>
+                    <Link to={!this.props.loggedIn ? "/login" : "/app"}> <button id="main-login" className="main-button">{this.props.loggedIn ? "Welcome, " + this.props.user.name : "Login"}</button></Link>
                     </li>
                     </ul>
                 </div>

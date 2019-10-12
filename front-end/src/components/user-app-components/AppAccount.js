@@ -7,7 +7,8 @@ export default class AppAccount extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            name: '',
+            name: this.props.currentUser.name,
+            email: this.props.currentUser.email,
             imageUrl: '',
             dateJoined: '',
             payment: ''
@@ -15,13 +16,7 @@ export default class AppAccount extends React.Component {
     }
 
     componentDidMount() {
-        //pull data from API
-        //alternatively user data can be sent in as props from UserApp
-        this.setState(() => {
-             return {
-                 name: 'Bob Smith'
-             }
-        })
+        
     }
     
     render() {
@@ -34,6 +29,8 @@ export default class AppAccount extends React.Component {
                         <h3>Profile</h3>
                         <hr />
                         <ProfilePic imageUrl={this.state.imageUrl}/>
+                        <h4>name: {this.state.name}</h4>
+                        <h4>email: {this.state.email}</h4>
                     </div>
                 </div>
                 <div className="col-md-6" id="account-info">
