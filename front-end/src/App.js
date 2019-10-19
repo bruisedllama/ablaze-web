@@ -26,6 +26,7 @@ class App extends Component {
     let user = {email: email}
     axios.post('http://localhost:5000' + '/api/users/get/' + email, user)
       .then((response) => {
+        console.log(response.data)
         this.setState({loggedIn: data, currentUser: response.data}, () => {
           localStorage.setItem('currentUserData', JSON.stringify(response.data))
         })
@@ -33,9 +34,13 @@ class App extends Component {
   }
 
   componentDidMount() {
-    localStorage.getItem('token') != null && this.setState({loggedIn: true, currentUser: JSON.parse(localStorage.getItem('currentUserData'))})
+    localStorage.getItem('token') != null && this.setState({loggedIn: true, currentUser: JSON.parse(localStorage.getItem('currentUserData'))}, () => this.changeLoginStatus(true, this.state.currentUser.email))
     this.setState({loaded: true})
   } 
+
+  componentDidUpdate() {
+    localStorage.getItem('token') != null && this.changeLoginStatus(true, this.state.currentUser.email)
+}
   
   render() {
     if(!this.state.loaded) {

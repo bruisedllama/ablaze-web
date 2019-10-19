@@ -6,21 +6,21 @@ const keys = require("../../config/keys");
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
-// Load User model
+// Load Partner model
 const Partner = require("../../models/Partner");
 
-// @route POST api/partners/register
-// @desc Register partner
-// @access Public
 router.get('/test', (req,res) => {
     res.send("test");
 })
+// @route POST api/partners/register
+// @desc Register partner
+// @access Public
 router.post('/register', (req, res) => {
     /*const { errors, isValid } = validateRegisterInput(req.body)
     if (!isValid) {
         return res.status(400).json(errors)
     }*/
-    Partner.findOne({ email: req.body.managerEmail }).then(partner => {
+    Partner.findOne({ managerEmail: req.body.managerEmail }).then(partner => {
         if (partner) {
             res.status(400).json({ email: "Email already exists! " })
         } else {
@@ -41,7 +41,7 @@ router.post('/register', (req, res) => {
                     newPartner.password = hash;
                     newPartner
                         .save()
-                        .then(user => res.send({success: true}))
+                        .then(partner => res.send({success: true}))
                         .catch(err => console.log(err));
                 });
             });
@@ -56,9 +56,9 @@ router.post('/login', (req, res) => {
     if (!isValid) {
         return res.status(400).json(errors)
     }
-    const email = req.body.managerEmail
+    const managerEmail = req.body.email
     const password = req.body.password
-    Partner.findOne({ email }).then(partner => {
+    Partner.findOne({ managerEmail }).then(partner => {
         if (!partner) {
             res.status(400).json({emailnotfound: "Email was not found"})
         } else {
@@ -98,9 +98,23 @@ router.post('/get', (req, res) => {
         .catch(err => console.log(err))
 })
 
+// @route GET api/partner/get/:email
+// @desc get partner data by email
+// @access Public?
 router.post('/get/:email', (req, res) => {
-    const email = req.body.email
-    Partner.findOne({email})
+    const managerEmail = req.body.email
+    Partner.findOne({managerEmail})
+        .then(partner => res.json(partner))
+        .catch(err => console.log(err))
+})
+
+
+// @route POST api/partner/update/:email
+// @desc update partner data
+// @access Public?
+router.post('/update/:email', (req, res) => {
+    const managerEmail = req.body.managerEmail
+    Partner.findOneAndUpdate({managerEmail}, req.body)
         .then(partner => res.json(partner))
         .catch(err => console.log(err))
 })

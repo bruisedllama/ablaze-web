@@ -15,12 +15,16 @@ const PartnerSchema = new Schema({
     required: true
   },
   phone: {
-    type: Number,
-    required: true
+    type: String,
+    required: false
   },
   storeType: {
     type: String,
     required: true
+  },
+  storeDetails: {
+    type: String,
+    required: false
   },
   managerName: {
     type: String,
@@ -38,6 +42,9 @@ const PartnerSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  coupons: [{type: Schema.Types.ObjectId, ref: 'Coupon'}]
-});
+  storeDescription: {
+    type: String,
+    required: false
+  }
+}, { collection : 'partners' });
 module.exports = Partner = mongoose.model("partner", PartnerSchema);

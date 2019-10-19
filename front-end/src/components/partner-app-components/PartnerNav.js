@@ -5,6 +5,7 @@ import axios from 'axios'
 import Logo from './../../images/logo-long.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+
 class PartnerNav extends React.Component {
     constructor(props) {
         super(props)
@@ -29,10 +30,10 @@ class PartnerNav extends React.Component {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarResponsive">
                         <ul className="navbar-nav ml-auto">
-                        <li className="nav-item" style={{display: path == '/partner/dashboard' ? 'none' : 'inline'}}>
+                        <li className="nav-item" style={{display: ['/partner/dashboard', '/partner/account', '/partner/business'].includes(path) ? 'none' : 'inline'}}>
                         <Link to={!this.props.loggedIn ? "/partner/login" : "/partner/dashboard"}> <button id="partner-login" className="main-button">{this.props.loggedIn ? "Dashboard" : "Login"}</button></Link>
                         </li>
-                        <li className="nav-item" style={{display: path == '/partner/dashboard' ? 'inline' : 'none', marginTop: "2px"}}>
+                        <li className="nav-item" style={{display: ['/partner/dashboard', '/partner/account', '/partner/business'].includes(path) ? 'inline' : 'none', marginTop: "2px"}}>
                             <button id="main-logout" className="secondary-button" onClick={this.logout}>Logout</button>
                         </li>
                         </ul>

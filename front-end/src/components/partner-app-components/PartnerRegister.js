@@ -5,7 +5,7 @@ import axios from 'axios'
 import PartnerTerms from './PartnerTerms'
 import Select from "react-select";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faChevronRight, faTimes, faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 
 export default class PartnerRegister extends React.Component {
     constructor(props) {
@@ -18,6 +18,7 @@ export default class PartnerRegister extends React.Component {
             phone: '',
             managerName: '',
             managerEmail: '',
+            storeDetails: '',
             password: '',
             password2: '',
             terms: false,
@@ -47,8 +48,6 @@ export default class PartnerRegister extends React.Component {
             missing.push("Valid store address is required")
         if(!/^([0-9a-zA-Z]([-\.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/.test(input.storeEmail))
             missing.push("Valid store email address is required")
-        if(!/^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/.test(input.phone))
-            missing.push('Valid phone number is required')
         if(missing.length > 0)
             this.setState({errors1: missing.join(', ')})
         else
@@ -86,6 +85,7 @@ export default class PartnerRegister extends React.Component {
                 storeEmail: this.state.storeEmail,
                 phone: this.state.phone,
                 storeType: this.state.storeType,
+                storeDetails: this.state.storeDetails,
                 managerName: this.state.managerName,
                 managerEmail: this.state.managerEmail,
                 password: this.state.password
@@ -103,6 +103,7 @@ export default class PartnerRegister extends React.Component {
                             console.log(response)
                             console.log("logged in!")
                             localStorage.setItem("partner-token", response.data.token)
+                            this.setState({step: 3})
                             this.props.changeLoginStatus(true, partner.email)
                         })
                         .catch((error) => {
@@ -148,6 +149,8 @@ export default class PartnerRegister extends React.Component {
             { value: 'other', label: 'Other...' },
         ]
 
+        const detailsArray = ['restaurant', 'specialty_store', 'service', 'entertainment', 'other']
+
         const customStyles = {
             option: (provided) => ({
               ...provided,
@@ -186,12 +189,13 @@ export default class PartnerRegister extends React.Component {
                     padding: this.state.step > 0 ? '10vh 8%' : '5vh 8%',
                     overflowY: this.state.step == 0 ? 'scroll' : 'visible',
                     overflowX: 'hidden',
-                    transitionDuration: '0.3s'
+                    transitionDuration: '0.3s',
+                    borderRadius: '5px'
                 }}>
                 <button id="reg-cancel" onClick={this.cancel} style={{display: this.state.step == 0 && 'none', position: 'absolute', top: '5vh', right: '4%'}}>
                 <FontAwesomeIcon className="fa-icon" icon={faTimes}/>
                 </button>
-                <div id="reg-box" style={{position: 'relative', height:'70vh'}}>
+                <div id="reg-box" style={{position: 'relative', height: detailsArray.includes(this.state.storeType) && this.state.step == 0 ? '80vh' : '70vh'}}>
                     <div id="reg-slide-1" className="reg-slide" style={{left: this.state.step*(-120) + '%'}}>
                         <h2>Register your Business for Ablaze</h2>
                         <label>Type of Business</label>
@@ -211,13 +215,27 @@ export default class PartnerRegister extends React.Component {
                             styles={customStyles}
                         >
                         </Select>
+                        <div style={{display: detailsArray.includes(this.state.storeType) ? 'block' : 'none' }}>
+                        <label style={{display: this.state.storeType == 'specialty_store' ? 'block' : 'none'}}>What Do You Sell?</label>
+                        <label style={{display: this.state.storeType == 'restaurant' ? 'block' : 'none'}}>What Cuisine Do You Serve?</label>
+                        <label style={{display: this.state.storeType == 'service' ? 'block' : 'none'}}>What Service Do You Provide?</label>
+                        <label style={{display: this.state.storeType == 'entertainment' ? 'block' : 'none'}}>What Form of Entertainment?</label>
+                        <label style={{display: this.state.storeType == 'other' ? 'block' : 'none'}}>Please Explain More About Your Business</label>
+                        <TextInput 
+                            name = 'storeDetails'
+                            className='text_input'
+                            value = {this.state.storeDetails}
+                            onChange = {this.onChange}
+                            light="true" 
+                            placeholder="specify the above information related to your business..."
+                        />
+                        </div>
                         <label>Business Name</label>
                         <TextInput 
                             name = 'storeName'
                             className='text_input'
                             value = {this.state.storeName}
-                            onChange = {this.onChange}
-                            id = 'register_store_name'  
+                            onChange = {this.onChange} 
                             light="true" 
                             placeholder="enter your business name..."
                         />
@@ -226,8 +244,7 @@ export default class PartnerRegister extends React.Component {
                             name = 'storeAddress'
                             className='text_input'
                             value = {this.state.storeAddress}
-                            onChange = {this.onChange}
-                            id = 'register_store_address'  
+                            onChange = {this.onChange} 
                             light="true" 
                             placeholder="enter your business address..."
                         />
@@ -237,7 +254,6 @@ export default class PartnerRegister extends React.Component {
                             name = 'storeEmail'
                             value = {this.state.storeEmail}
                             onChange = {this.onChange}
-                            id = 'register_store_email'  
                             light="true" 
                             type="email"
                             placeholder="enter your business email..."
@@ -248,14 +264,13 @@ export default class PartnerRegister extends React.Component {
                             name = 'phone'
                             value = {this.state.phone}
                             onChange = {this.onChange}
-                            id = 'register_store_phone'  
                             light="true" 
                             type="phone"
                             placeholder="enter your business phone number..."
                         />
                         <br/>
                         <div className="alert alert-danger" id="error-message" role="alert" style={{display: this.state.errors1 ? 'block' : 'none'}}>
-                            errors: {this.state.errors1}
+                            Errors: {this.state.errors1}
                         </div>
                         <button 
                             onClick={this.getStarted} style={{marginBottom: 30}}
@@ -274,7 +289,6 @@ export default class PartnerRegister extends React.Component {
                             className='text_input'
                             value = {this.state.managerName}
                             onChange = {this.onChange}
-                            id = 'register_manager_name'  
                             light="true" 
                             placeholder="enter your name..."
                         />
@@ -283,8 +297,7 @@ export default class PartnerRegister extends React.Component {
                             name = 'managerEmail'
                             className='text_input'
                             value = {this.state.managerEmail}
-                            onChange = {this.onChange}
-                            id = 'register_manager_email'  
+                            onChange = {this.onChange} 
                             light="true" 
                             placeholder="enter the email you would like to create your account with..."
                         />
@@ -294,8 +307,7 @@ export default class PartnerRegister extends React.Component {
                             className='text_input'
                             name = 'password'
                             value = {this.state.password}
-                            onChange = {this.onChange}
-                            id = 'register_store_password'  
+                            onChange = {this.onChange} 
                             light="true" 
                             placeholder="enter your password..."
                         />
@@ -306,13 +318,12 @@ export default class PartnerRegister extends React.Component {
                             name = 'password2'
                             value = {this.state.password2}
                             onChange = {this.onChange}
-                            id = 'register_store_password2'  
                             light="true" 
                             placeholder="enter your password again..."
                         />
                         <br/>
                         <div className="alert alert-danger" id="error-message" role="alert" style={{display: this.state.errors2 ? 'block' : 'none'}}>
-                            errors: {this.state.errors2}
+                            Errors: {this.state.errors2}
                         </div>
                         <button 
                             onClick={this.continue}
@@ -338,6 +349,12 @@ export default class PartnerRegister extends React.Component {
                         >
                             Register  <FontAwesomeIcon className="fa-icon" icon={faChevronRight}/>
                         </button>
+                    </div>
+                    <div id="reg-slide-3" className="reg-slide" style={{left: (this.state.step*(-120)+360) + '%', textAlign: 'center'}}>
+                        <h2>Registration Successful!</h2>
+                        <FontAwesomeIcon className="fa-icon" id="check" icon={faCheckCircle}/>
+                        <p>Go to your dashboard to begin adding business info, creating deals, and moving your business forward!</p>
+                        <Link to='/partner/dashboard'><button className="main-button">Go to Dashboard <FontAwesomeIcon className="fa-icon" icon={faChevronRight}/></button></Link>
                     </div>
                 </div>
             </div>

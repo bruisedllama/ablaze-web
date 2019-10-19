@@ -117,7 +117,8 @@ export default class Register extends React.Component {
                     backgroundColor: 'white',
                     padding: '8vh 8%',
                     zIndex: '99999',
-                    transitionDuration: '0.3s'
+                    transitionDuration: '0.3s',
+                    borderRadius: '5px'
                 }}>
                     <h2>Terms & Conditions</h2>
                     <UserTerms/>
@@ -143,8 +144,7 @@ export default class Register extends React.Component {
                         name = 'name'
                         className='text_input'
                         value = {this.state.name}
-                        onChange = {this.onChange}
-                        id = 'register_name'  
+                        onChange = {this.onChange}  
                         light="true" 
                         placeholder="enter your full name..."
                     />
@@ -153,8 +153,7 @@ export default class Register extends React.Component {
                         name = 'email'
                         className='text_input'
                         value = {this.state.email}
-                        onChange = {this.onChange}
-                        id = 'register_email'  
+                        onChange = {this.onChange}  
                         light="true" 
                         placeholder="enter your email..."
                     />
@@ -164,8 +163,7 @@ export default class Register extends React.Component {
                         className='text_input'
                         name = 'password'
                         value = {this.state.password}
-                        onChange = {this.onChange}
-                        id = 'register_password'  
+                        onChange = {this.onChange} 
                         light="true" 
                         placeholder="enter your password..."
                     />
@@ -175,8 +173,7 @@ export default class Register extends React.Component {
                         className='text_input'
                         name = 'password2'
                         value = {this.state.password2}
-                        onChange = {this.onChange}
-                        id = 'register_password2'  
+                        onChange = {this.onChange} 
                         light="true" 
                         placeholder="enter your password again..."
                     />
