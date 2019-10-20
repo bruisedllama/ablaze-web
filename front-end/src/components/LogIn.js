@@ -21,6 +21,7 @@ export default class LogIn extends React.Component {
     }
 
     logIn = (e) => {
+        localStorage.removeItem('partner-token')
         e.preventDefault();
         const user = {
             email: this.state.email,

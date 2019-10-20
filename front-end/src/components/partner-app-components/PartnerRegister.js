@@ -5,7 +5,7 @@ import axios from 'axios'
 import PartnerTerms from './PartnerTerms'
 import Select from "react-select";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronRight, faTimes, faCheckCircle } from '@fortawesome/free-solid-svg-icons'
+import { faChevronRight, faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 
 export default class PartnerRegister extends React.Component {
     constructor(props) {
@@ -193,7 +193,7 @@ export default class PartnerRegister extends React.Component {
                     borderRadius: '5px'
                 }}>
                 <button id="reg-cancel" onClick={this.cancel} style={{display: this.state.step == 0 && 'none', position: 'absolute', top: '5vh', right: '4%'}}>
-                <FontAwesomeIcon className="fa-icon" icon={faTimes}/>
+                ✕
                 </button>
                 <div id="reg-box" style={{position: 'relative', height: detailsArray.includes(this.state.storeType) && this.state.step == 0 ? '80vh' : '70vh'}}>
                     <div id="reg-slide-1" className="reg-slide" style={{left: this.state.step*(-120) + '%'}}>

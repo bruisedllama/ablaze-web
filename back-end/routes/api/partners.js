@@ -92,7 +92,7 @@ router.post('/login', (req, res) => {
 // @route GET api/partners/get
 // @desc get ALL partner data
 // @access Public?
-router.post('/get', (req, res) => {
+router.get('/get', (req, res) => {
     Partner.find()
         .then(partners => res.json(partners))
         .catch(err => console.log(err))
@@ -101,20 +101,18 @@ router.post('/get', (req, res) => {
 // @route GET api/partner/get/:email
 // @desc get partner data by email
 // @access Public?
-router.post('/get/:email', (req, res) => {
-    const managerEmail = req.body.email
-    Partner.findOne({managerEmail})
+router.get('/get/:email', (req, res) => {
+    Partner.findOne({managerEmail: req.params.email})
         .then(partner => res.json(partner))
         .catch(err => console.log(err))
 })
 
 
-// @route POST api/partner/update/:email
+// @route POST api/partner/update/:id
 // @desc update partner data
 // @access Public?
-router.post('/update/:email', (req, res) => {
-    const managerEmail = req.body.managerEmail
-    Partner.findOneAndUpdate({managerEmail}, req.body)
+router.post('/update/:id', (req, res) => {
+    Partner.findByIdAndUpdate(req.params.id, req.body)
         .then(partner => res.json(partner))
         .catch(err => console.log(err))
 })

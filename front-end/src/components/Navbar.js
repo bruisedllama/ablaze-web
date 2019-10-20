@@ -49,7 +49,7 @@ class Navbar extends React.Component {
                             <button id="main-logout" className="secondary-button" onClick={this.logout}>Logout</button>
                         </li>
                         </ul>
-                    </nav>  
+                    </nav>
                 </div>
             )
         } else if(path==='/terms') {

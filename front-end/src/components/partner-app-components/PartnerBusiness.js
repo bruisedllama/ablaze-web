@@ -4,8 +4,7 @@ import { TextInput, Button, Search } from 'carbon-components-react'
 import axios from 'axios'
 import Select from "react-select";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons'
-import { thisExpression } from '../../../../../../node_modules/@babel/types';
+import { faEdit } from '@fortawesome/free-solid-svg-icons'
 
 export default class PartnerBusiness extends React.Component {
     constructor(props) {
@@ -62,11 +61,12 @@ export default class PartnerBusiness extends React.Component {
                 storeDetails: this.state.storeDetails,
                 storeDescription: this.state.storeDescription
             }
-            axios.post("http://localhost:5000"   + '/api/partners/update/' + email, updatedInfo)
+            axios.post("http://localhost:5000"   + '/api/partners/update/' + this.props.currentPartner._id, updatedInfo)
                 .then(response => {
                     console.log(response)
                     console.log("updated succesfully!")
                     this.setState({updated: true, errors: ''})
+                    this.props.changeLoginStatus(true, this.props.currentPartner.managerEmail)
                 }).catch((error) => {
                     if (error.response) {
                         //let errorData = [error.response.data.name ? error.response.data.name : null, error.response.data.email ? error.response.data.email : null, error.response.data.password ? error.response.data.password : null, error.response.data.password2 ? error.response.data.password2 : null]
@@ -143,7 +143,7 @@ export default class PartnerBusiness extends React.Component {
                 </div>
                 <div id="partner-edit-business-info" style={{display: this.state.edit ? 'block' : 'none'}}>
                     <h2>Name: <i>{this.props.currentPartner.storeName}</i></h2>
-                    <button id="edit-business-info" onClick={this.toggleEdit}><FontAwesomeIcon className="fa-icon" icon={faTimes} /></button>
+                    <button id="edit-business-info" onClick={this.toggleEdit}>✕</button>
                     <hr/>
                     <p>Type of Business:
                     <Select

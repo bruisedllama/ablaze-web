@@ -1,9 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { TextInput, Button } from 'carbon-components-react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import axios from 'axios'
 
 export default class Home extends React.Component {
     constructor(props) {

@@ -86,7 +86,7 @@ router.post('/login', (req, res) => {
 // @route GET api/users/get
 // @desc get all users and their data
 // @access Public?
-router.post('/get', (req, res) => {
+router.get('/get', (req, res) => {
     User.find({})
         .then(users => res.json(users))
         .catch(err => console.log(err))
@@ -95,9 +95,8 @@ router.post('/get', (req, res) => {
 // @route GET api/users/get/:email
 // @desc get user data by email
 // @access Public?
-router.post('/get/:email', (req, res) => {
-    const email = req.body.email
-    User.findOne({email})
+router.get('/get/:email', (req, res) => {
+    User.findOne({email: req.params.email})
         .then(user => res.json(user))
         .catch(err => console.log(err))
 })

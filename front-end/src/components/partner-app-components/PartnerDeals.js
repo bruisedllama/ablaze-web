@@ -4,7 +4,7 @@ import { TextInput, Button, Search } from 'carbon-components-react'
 import axios from 'axios'
 import CreatableSelect from 'react-select/creatable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faTimes, faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faTimes, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import Deal from './Deal'
 
 export default class PartnerDeals extends React.Component {
@@ -18,7 +18,9 @@ export default class PartnerDeals extends React.Component {
             orig_price: '',
             step: 0,
             errors: '',
-            done: false
+            done: false,
+            activeleft: 40,
+            deactiveleft: 40,
         }
     }
 
@@ -30,6 +32,24 @@ export default class PartnerDeals extends React.Component {
         
     }
 
+    activeScrollLeft = () => {
+        if(this.state.activeleft<40)
+            this.setState({activeleft: this.state.activeleft+70})
+    }
+
+    activeScrollRight = width => {
+        if(this.state.activeleft>width - window.innerWidth)
+            this.setState({activeleft: this.state.activeleft-70})
+    }
+    deactiveScrollLeft = () => {
+        if(this.state.deactiveleft<40)
+            this.setState({deactiveleft: this.state.deactiveleft+70})
+    }
+    deactiveScrollRight = width => {
+        if(this.state.deactiveleft>width - window.innerWidth)
+            this.setState({deactiveleft: this.state.deactiveleft-70})
+    }
+
     onChange = (event) => {
         const {name, value} = event.target
         this.setState({ [name]: value })
@@ -39,7 +59,7 @@ export default class PartnerDeals extends React.Component {
         this.setState({deal_type: newValue.value})
     }
 
-    checkDeal = () => {
+    checkDeal = () => { //verify deal info
         let input = this.state
         let price = input.orig_price
         if(price.indexOf('$')!=-1)
@@ -57,21 +77,42 @@ export default class PartnerDeals extends React.Component {
             this.setState({step: 1, errors: ''})
     }
 
+    deactivate = id => {
+        const data = {active: false}
+        axios.post('http://localhost:5000' + '/api/deals/update/' + id, data)
+            .then(response => {
+                console.log(response)
+                this.props.updateDeals()
+            })
+            .catch((error) => {
+                if (error.response) {
+                    console.log(error.response)
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            })
+    }
+
     createDeal = () => {
         let price = this.state.orig_price
         if(price.indexOf('$')!=-1)
             price = price.substr(1)
         const deal = {
-            issuer: this.props.currentPartner.managerEmail,
+            issuer: this.props.currentPartner._id,
             item: this.state.item,
             deal: this.state.deal_type,
             origPrice: price,
             details: this.state.details
         }
-        console.log(deal)
         axios.post('http://localhost:5000' + '/api/deals/createnew', deal)
             .then(response => {
                 console.log(response)
+                this.props.updateDeals()
                 this.setState({done: true}, () => setTimeout(() => this.setState({done:false, modalOpen: false, orig_price: '', item: '', step: 0, details: '', deal_type: '', }), 1800))
             })
             .catch((error) => {
@@ -85,7 +126,7 @@ export default class PartnerDeals extends React.Component {
                     console.log('Error', error.message);
                 }
                 console.log(error.config);
-        })
+            })
     }
     
     render() { 
@@ -98,51 +139,65 @@ export default class PartnerDeals extends React.Component {
             { value: 'BOGO', label: 'Buy One Get One Free' },
             { value: 'Free Trial', label: 'Free Trial' },
         ]
+        const dealwidth = 300
+        let activewidth = 0, deactivewidth = 0
+        this.props.deals.map(deal => {
+            deal.active ? activewidth+=dealwidth : deactivewidth+=dealwidth
+        })
 
         const customStyles = {
             option: (provided) => ({
               ...provided,
-              fontSize: "14px"
-            }),
+              fontSize: "14px"}),
             input: (provided) => ({
                 ...provided,
-                fontSize: "14px",
-            
-            }),
+                fontSize: "14px"}),
             placeholder: (provided) => ({
                 ...provided,
-                fontSize: "14px",
-            }),
+                fontSize: "14px",}),
             valueContainer: (provided) => ({
                 ...provided,
                 fontSize: "14px",
-                marginLeft: "7px"
-            }),
+                marginLeft: "7px"}),
             singleValue: (provided) => ({
                 ...provided,
-                fontSize: "14px",
-            })
+                fontSize: "14px",})
           }      
         return(
             <div id="partner-deals" style={{display: this.props.display ? 'block' : 'none'}}>
                 <div id="partner-manage-deals-sec">
                     <h2>Manage Deals</h2>
                     <button id="create-deal" className="main-button" onClick={this.toggleCreate}>
-                         <FontAwesomeIcon icon={faPlus} />
+                         +
                     </button>
                     <hr />
                     <h4>Active Deals</h4>
-                    <div className="row" id="partner-active-deals" class="partner-deals-row">
+                    <div id="partner-active-deals" class="partner-deals-row">
+                        <button id="left-button" style={{display: activewidth>900 ? 'block': 'none'}} onClick={this.activeScrollLeft}><FontAwesomeIcon icon={faChevronLeft} /></button>
+                        <button id="right-button" style={{display: activewidth>900 ? 'block': 'none'}} onClick={() => this.activeScrollRight(activewidth)}><FontAwesomeIcon icon={faChevronRight} /></button>
+                        <div className="partner-deal-sec-row" style={{width: activewidth == 0 ? '100%' : activewidth, position: 'absolute', left: this.state.activeleft, transitionDuration: '0.2s'}}>
                         {
                             this.props.deals.map(deal => {
-                                return <Deal shown={deal.active} deal={deal}/>
+                                return <Deal active={true} deal={deal} deactivate={this.deactivate}/>
                             })
                         }
+                        </div>
                     </div>
                     <h4>Inactive Deals</h4>
-                    <div className="row" id="partner-inactive-deals" className="partner-deals-row">
+                    <div id="partner-inactive-deals" className="partner-deals-row">
+                        <button id="left-button" style={{display: deactivewidth>900 ? 'block': 'none'}} onClick={this.deactiveScrollLeft}><FontAwesomeIcon icon={faChevronLeft} /></button>
+                        <button id="right-button" style={{display: deactivewidth>900 ? 'block': 'none'}} onClick={() => this.deactiveScrollRight(deactivewidth)}><FontAwesomeIcon icon={faChevronRight} /></button>
+                        <div className="partner-deal-sec-row" style={{width: deactivewidth == 0 ? '100%' : deactivewidth, position: 'absolute', left: this.state.deactiveleft, transitionDuration: '0.2s'}}>
+                            {
+                                this.props.deals.map(deal => {
+                                    return <Deal active={false} deal={deal}/>
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
+
+
 
                 <div id="create-deal-modal" 
                 style={{
@@ -159,7 +214,7 @@ export default class PartnerDeals extends React.Component {
                     borderRadius: '5px',
                     overflowX: 'hidden'
                 }}>
-                <button id="cancel-create" onClick={this.toggleCreate}><FontAwesomeIcon icon={faTimes} /></button>
+                <button id="cancel-create" onClick={this.toggleCreate}>✕</button>
                     <div id="create-deal-box">
                         <div id="create-step-1" className="create-slide" style={{left: (this.state.step*(-120)) + '%'}}>
                             <h2>Create Deal</h2>

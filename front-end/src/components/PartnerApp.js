@@ -17,8 +17,7 @@ class PartnerApp extends React.Component {
 
     changeLoginStatus = (data, email) => {
         //get user data for email...
-        let user = {email: email}
-        axios.post('http://localhost:5000' + '/api/partners/get/' + email, user)
+        axios.get('http://localhost:5000' + '/api/partners/get/' + email)
           .then((response) => {
             this.setState({loggedIn: data, currentPartner: response.data}, () => {
               localStorage.setItem('currentPartnerData', JSON.stringify(response.data))
@@ -26,13 +25,13 @@ class PartnerApp extends React.Component {
           }).catch(err => console.log(err))
     }
 
-    componentDidMount() {
-        localStorage.getItem('partner-token') != null && this.setState({loggedIn: true, currentPartner: JSON.parse(localStorage.getItem('currentPartnerData'))}, () => this.changeLoginStatus(true, this.state.currentPartner.managerEmail))
+    componentDidMount() {//figure out a better way to do this later
+        localStorage.getItem('partner-token') != null && this.setState({loggedIn: true, currentPartner: JSON.parse(localStorage.getItem('currentPartnerData'))})
         this.setState({loaded: true})
     } 
 
-    componentDidUpdate() {
-        localStorage.getItem('partner-token') != null && this.changeLoginStatus(true, this.state.currentPartner.managerEmail)
+    componentDidUpdate() {//figure out a better way to do this later
+        
     }
     
     render() {

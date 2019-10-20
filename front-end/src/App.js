@@ -23,8 +23,7 @@ class App extends Component {
 
   changeLoginStatus = (data, email) => {
     //get user data for email...
-    let user = {email: email}
-    axios.post('http://localhost:5000' + '/api/users/get/' + email, user)
+    axios.get('http://localhost:5000' + '/api/users/get/' + email)
       .then((response) => {
         console.log(response.data)
         this.setState({loggedIn: data, currentUser: response.data}, () => {
@@ -33,14 +32,14 @@ class App extends Component {
       }).catch(err => console.log(err))
   }
 
-  componentDidMount() {
-    localStorage.getItem('token') != null && this.setState({loggedIn: true, currentUser: JSON.parse(localStorage.getItem('currentUserData'))}, () => this.changeLoginStatus(true, this.state.currentUser.email))
+  componentDidMount() { 
+    localStorage.getItem('token') != null && this.setState({loggedIn: true, currentUser: JSON.parse(localStorage.getItem('currentUserData'))})
     this.setState({loaded: true})
   } 
 
-  componentDidUpdate() {
-    localStorage.getItem('token') != null && this.changeLoginStatus(true, this.state.currentUser.email)
-}
+  componentDidUpdate() { //call changeLoginStatus when component needs to update
+    //localStorage.getItem('token') != null && this.changeLoginStatus(true, this.state.currentUser.email)
+  }
   
   render() {
     if(!this.state.loaded) {
@@ -66,7 +65,7 @@ class App extends Component {
               />
               <Route
                 path='/app'
-                render={(props) => <UserApp {...props} user={this.state.currentUser} loggedIn={this.state.loggedIn} />}
+                render={(props) => <UserApp {...props} user={this.state.currentUser} loggedIn={this.state.loggedIn} changeLoginStatus={this.changeLoginStatus}/>}
               />
               <Route path="/partner" component={PartnerApp}/>
             </div>
